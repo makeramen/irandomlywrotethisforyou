@@ -14,7 +14,7 @@ class MainHandler(webapp.RequestHandler):
       allhrefs = self.get_hrefs()
       memcache.add("allhrefs", allhrefs, 3600)
     
-    self.redirect(allhrefs[random.randint(0,len(allhrefs))])
+    self.redirect(allhrefs[random.randint(0,len(allhrefs) - 1)])
 
   def get_hrefs(self):
     blogger_service = service.GDataService()
