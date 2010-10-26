@@ -12,7 +12,7 @@ class MainHandler(webapp.RequestHandler):
     allhrefs = memcache.get("allhrefs")
     if allhrefs is None:
       allhrefs = self.get_hrefs()
-      memcache.add("allhrefs", allhrefs, 3600)
+      memcache.add("allhrefs", allhrefs, 43200)
     
     self.redirect(allhrefs[random.randint(0,len(allhrefs) - 1)])
 
