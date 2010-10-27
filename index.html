@@ -1,8 +1,23 @@
-<html>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+	<head>
+		<title>I [Randomly] Wrote This For You</title>
+		<link type="text/css" rel="stylesheet" href="/stylesheets/style.css" />
+	</head>
+
 	<body>
-		<h2>{{ date }}</h2>
-		<h1>{{ entry.title.text }}<h1>
-		<img src="{{ imgurl }}" />
-		<p>{{ content }}</p>
+		<div id="content">
+			<h2>{{ date }}</h2>
+			<a href = "{{ url }}">
+				<h1>{{ title }}<h1>
+			</a>
+			<a href = "{{ imgurl}}">
+				<img src="{{ imgurl }}" />
+			</a>
+			<p>{{ content }}</p>
+		</div>
 	</body>
 </html>
