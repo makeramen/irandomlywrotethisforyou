@@ -60,12 +60,12 @@ class StayPage(webapp.RequestHandler):
     # entry = entries[506]
     
     template_values = {
-                'title' : entry[0],
-                'date': entry[1],
-                'imgurl': entry[2],
-                'content': entry[3],
-                'url': entry[4]
-                }
+                      'title' : entry['title'],
+                      'date' : entry['date'],
+                      'imgurl' : entry['imgurl'],
+                      'content' : entry['content'],
+                      'url' : entry['url']
+                      }
 
     path = os.path.join(os.path.dirname(__file__), 'index.html')
     self.response.out.write(template.render(path, template_values))
@@ -94,12 +94,18 @@ class StayPage(webapp.RequestHandler):
       imgurl = re.findall('href="([^"]*)"', entry.content.text)[0]
       content = re.sub('<!--.*?-->', '', entry.content.text)
       content = re.sub('<br[ ]*/>', '\n', content)
-      content = re.sub('<.*?>|', '', content)
+      content = re.sub('<.*?>', '', content)
       content = string.strip(content)
       content = re.sub('\n', '<br />', content)
       date = datetime.datetime.strptime(entry.published.text[:10], "%Y-%m-%d").strftime("%A, %B %d, %Y")
       url = entry.link[-1].href
-      cachedentry = [title, date, imgurl, content, url]
+      cachedentry = {
+                    'title' : title,
+                    'date' : date,
+                    'imgurl' : imgurl,
+                    'content' : content,
+                    'url' : url
+                    }
       cachedentries.append(cachedentry)
 
     return cachedentries
