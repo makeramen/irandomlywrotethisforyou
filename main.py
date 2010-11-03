@@ -60,11 +60,7 @@ class StayPage(webapp.RequestHandler):
     # entry = entries[506]
     
     template_values = {
-                      'title' : entry['title'],
-                      'date' : entry['date'],
-                      'imgurl' : entry['imgurl'],
-                      'content' : entry['content'],
-                      'url' : entry['url']
+                      'entry' : entry,
                       }
 
     path = os.path.join(os.path.dirname(__file__), 'index.html')

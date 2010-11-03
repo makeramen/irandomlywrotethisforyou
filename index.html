@@ -10,14 +10,14 @@
 
 	<body>
 		<div id="content">
-			<h2>{{ date }}</h2>
-			<a href = "{{ url }}">
-				<h1>{{ title }}<h1>
+			<h2>{{ entry.date }}</h2>
+			<a href = "{{ entry.url }}">
+				<h1>{{ entry.title }}<h1>
 			</a>
-			<a href = "{{ imgurl }}">
-				<img src="{{ imgurl }}" />
+			<a href = "{{ entry.imgurl }}">
+				<img src="{{ entry.imgurl }}" />
 			</a>
-			<p>{{ content }}</p>
+			<p>{{ entry.content }}</p>
 		</div>
 	</body>
 </html>
