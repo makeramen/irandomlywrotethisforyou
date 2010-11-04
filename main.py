@@ -1,23 +1,27 @@
 #!/usr/bin/env python
 import os
-from google.appengine.ext.webapp import template
-from google.appengine.ext import webapp
-from google.appengine.ext.webapp import util
-from google.appengine.api import memcache
-from gdata import service
 import gdata
 import atom
 import random
 import re
 import datetime
-import string
+import logging
+
+from google.appengine.ext.webapp import template
+from google.appengine.ext import webapp
+from google.appengine.ext.webapp import util
+from google.appengine.api import memcache
+from gdata import service
 
 class RedirectHandler(webapp.RequestHandler):
   def get(self):
     allhrefs = memcache.get("allhrefs")
     if allhrefs is None:
+      logging.info('cache miss')
       allhrefs = self.get_hrefs()
       memcache.add("allhrefs", allhrefs, 43200)
+    else:
+      logging.info('cache hit')
     
     self.redirect(allhrefs[random.randint(0,len(allhrefs) - 1)])
 
@@ -30,7 +34,7 @@ class RedirectHandler(webapp.RequestHandler):
     query.feed = '/feeds/6752139154038265086/posts/default'
     query.max_results = 400
     feed = blogger_service.Get(query.ToUri())
-    
+    logging.info('%d urls fetched, fetch number %d' %(len(feed.entry), 1))
     allhrefs = []
     for entry in feed.entry:
       allhrefs.append(entry.link[-1].href)
@@ -39,22 +43,28 @@ class RedirectHandler(webapp.RequestHandler):
     while len(feed.entry) == 400:
       query.start_index = i*400 + 1
       feed = blogger_service.Get(query.ToUri())
+      logging.info('%d urls fetched, fetch number %d' %(len(feed.entry), i + 1))
       for entry in feed.entry:
         allhrefs.append(entry.link[-1].href)
       i += 1
-
+    
+    logging.info('retrieved %d urls total' %len(allhrefs))
     return allhrefs
 
 class StayPage(webapp.RequestHandler):
   def get(self):
     entries = memcache.get("entries")
     if entries is None:
+      logging.info('cache miss')
       entries = self.get_cached_entries()
       memcache.add("entries", entries, 43200)
     elif len(entries[0]) != 5:
+      logging.info('flushing memcache')
       memcache.flush_all()
       entries = self.get_cached_entries()
       memcache.add("entries", entries, 43200)
+    else:
+      logging.info('cache hit')
     
     entry = entries[random.randint(0,len(entries)-1)]
     # entry = entries[506]
@@ -75,12 +85,14 @@ class StayPage(webapp.RequestHandler):
     query.feed = '/feeds/6752139154038265086/posts/default'
     query.max_results = 400
     feed = blogger_service.Get(query.ToUri())
+    logging.info('%d entries fetched, fetch number %d' %(len(feed.entry), 1))
     entries = feed.entry
 
     i = 1
     while len(feed.entry) == 400:
       query.start_index = i*400 + 1
       feed = blogger_service.Get(query.ToUri())
+      logging.info('%d entries fetched, fetch number %d' %(len(feed.entry), i + 1))
       entries.extend(feed.entry)
       i += 1
 
@@ -91,7 +103,7 @@ class StayPage(webapp.RequestHandler):
       content = re.sub('<!--.*?-->', '', entry.content.text)
       content = re.sub('<br[ ]*/>', '\n', content)
       content = re.sub('<.*?>', '', content)
-      content = string.strip(content)
+      content = content.strip()
       content = re.sub('\n', '<br />', content)
       date = datetime.datetime.strptime(entry.published.text[:10], "%Y-%m-%d").strftime("%A, %B %d, %Y")
       url = entry.link[-1].href
@@ -104,6 +116,7 @@ class StayPage(webapp.RequestHandler):
                     }
       cachedentries.append(cachedentry)
 
+    logging.info('retrieved %d entries total' %len(entries))
     return cachedentries
 
 
