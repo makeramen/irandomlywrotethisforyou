@@ -67,7 +67,8 @@ class StayPage(webapp.RequestHandler):
       logging.info('cache hit')
     
     entry = entries[random.randint(0,len(entries)-1)]
-    # entry = entries[506]
+    #entry = entries[0]
+    #entry = entries[-472]
     
     template_values = {
                       'entry' : entry,
@@ -99,7 +100,7 @@ class StayPage(webapp.RequestHandler):
     cachedentries = []
     for entry in entries:
       title = entry.title.text
-      imgurl = re.findall('href="([^"]*)"', entry.content.text)[0]
+      imgurl = re.findall('href="([^"]*)"', entry.content.text)
       content = re.sub('<!--.*?-->', '', entry.content.text)
       content = re.sub('<br[ ]*/>', '\n', content)
       content = re.sub('<.*?>', '', content)

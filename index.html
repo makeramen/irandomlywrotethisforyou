@@ -14,9 +14,11 @@
 			<a href = "{{ entry.url }}">
 				<h1>{{ entry.title }}<h1>
 			</a>
-			<a href = "{{ entry.imgurl }}">
-				<img src="{{ entry.imgurl }}" />
+			{% if entry.imgurl %}
+			<a href = "{{ entry.imgurl.0 }}">
+				<img src="{{ entry.imgurl.0 }}" />
 			</a>
+			{% endif %}
 			<p>{{ entry.content }}</p>
 		</div>
 	</body>
