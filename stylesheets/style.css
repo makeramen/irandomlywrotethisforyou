@@ -63,6 +63,14 @@ table {
 a {
   text-decoration: none;
 }
+h1 {
+  color: #AD9;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 25px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
 h1:hover {
   color: #CCC;
 }
@@ -72,15 +80,6 @@ h2 {
   color: #777;
   letter-spacing: 2px;
   font-weight: bold;
-}
-h1 {
-  color: #AD9;
-  font-size: 16px;
-  font-weight: bold;
-  height: 25px;
-  line-height: 25px;
-  margin-top: 4px;
-  margin-bottom: 4px;
 }
 p {
   line-height: 20px;
