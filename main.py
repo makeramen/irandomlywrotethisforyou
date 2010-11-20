@@ -123,7 +123,7 @@ class StayPage(webapp.RequestHandler):
 
 def main():
     application = webapp.WSGIApplication([('/', RedirectHandler),
-                                            ('/stay', StayPage)])
+                                            ('/stay/?', StayPage)])
     util.run_wsgi_app(application)
 
 if __name__ == '__main__':
