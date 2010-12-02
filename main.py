@@ -122,6 +122,7 @@ class StayPage(webapp.RequestHandler):
 
 
 def main():
+    logging.getLogger().setLevel(logging.DEBUG)
     application = webapp.WSGIApplication([('/', RedirectHandler),
                                             ('/stay/?', StayPage)])
     util.run_wsgi_app(application)
