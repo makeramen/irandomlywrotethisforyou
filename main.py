@@ -32,7 +32,7 @@ class RedirectHandler(webapp.RequestHandler):
     blogger_service.ssl = False
     query = service.Query()
     query.feed = '/feeds/6752139154038265086/posts/default'
-    query.max_results = 400
+    query.max_results = 500
     feed = blogger_service.Get(query.ToUri())
     logging.info('%d urls fetched, fetch number %d' %(len(feed.entry), 1))
     allhrefs = []
@@ -40,8 +40,8 @@ class RedirectHandler(webapp.RequestHandler):
       allhrefs.append(entry.link[-1].href)
 		
     i = 1
-    while len(feed.entry) == 400:
-      query.start_index = i*400 + 1
+    while len(feed.entry) == 500:
+      query.start_index = i*500 + 1
       feed = blogger_service.Get(query.ToUri())
       logging.info('%d urls fetched, fetch number %d' %(len(feed.entry), i + 1))
       for entry in feed.entry:
@@ -84,14 +84,14 @@ class StayPage(webapp.RequestHandler):
     blogger_service.ssl = False
     query = service.Query()
     query.feed = '/feeds/6752139154038265086/posts/default'
-    query.max_results = 400
+    query.max_results = 500
     feed = blogger_service.Get(query.ToUri())
     logging.info('%d entries fetched, fetch number %d' %(len(feed.entry), 1))
     entries = feed.entry
 
     i = 1
-    while len(feed.entry) == 400:
-      query.start_index = i*400 + 1
+    while len(feed.entry) == 500:
+      query.start_index = i*500 + 1
       feed = blogger_service.Get(query.ToUri())
       logging.info('%d entries fetched, fetch number %d' %(len(feed.entry), i + 1))
       entries.extend(feed.entry)
