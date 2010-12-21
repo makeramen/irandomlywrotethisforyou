@@ -51,7 +51,7 @@ class RedirectHandler(webapp.RequestHandler):
     logging.info('retrieved %d urls total' %len(allhrefs))
     return allhrefs
 
-class StayPage(webapp.RequestHandler):
+class StayPageHandler(webapp.RequestHandler):
   def get(self):
     entries = memcache.get("entries")
     if entries is None:
@@ -120,12 +120,11 @@ class StayPage(webapp.RequestHandler):
     logging.info('retrieved %d entries total' %len(entries))
     return cachedentries
 
-
 def main():
-    logging.getLogger().setLevel(logging.DEBUG)
-    application = webapp.WSGIApplication([('/', RedirectHandler),
-                                            ('/stay/?', StayPage)])
-    util.run_wsgi_app(application)
+  logging.getLogger().setLevel(logging.DEBUG)
+  application = webapp.WSGIApplication([('/stay/?', StayPageHandler),
+                                          ('.*', RedirectHandler)])
+  util.run_wsgi_app(application)
 
 if __name__ == '__main__':
     main()
