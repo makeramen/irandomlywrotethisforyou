@@ -74,7 +74,7 @@ class StayPage(webapp.RequestHandler):
                       'entry' : entry,
                       }
 
-    path = os.path.join(os.path.dirname(__file__), 'index.html')
+    path = os.path.join(os.path.dirname(__file__), 'stay.html')
     self.response.out.write(template.render(path, template_values))
     
   def get_cached_entries(self):
