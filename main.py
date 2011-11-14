@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import os
 import gdata
 import atom
@@ -6,20 +8,25 @@ import random
 import re
 import datetime
 import logging
+import webapp2
+import jinja2
 
-from google.appengine.ext.webapp import template
-from google.appengine.ext import webapp
-from google.appengine.ext.webapp import util
 from google.appengine.api import memcache
 from gdata import service
 
-class RedirectHandler(webapp.RequestHandler):
+logging.getLogger().setLevel(logging.DEBUG)
+
+jinja_environment = jinja2.Environment(
+    loader=jinja2.FileSystemLoader(os.path.dirname(__file__), encoding='utf-8'))
+
+class RedirectHandler(webapp2.RequestHandler):
     def get(self):
+        # memcache.flush_all()
         allhrefs = memcache.get("allhrefs")
         if allhrefs is None:
             logging.info('cache miss')
             allhrefs = self.get_hrefs()
-            memcache.add("allhrefs", allhrefs, 43200)
+            memcache.set("allhrefs", allhrefs, 43200)
         else:
             logging.info('cache hit')
         
@@ -33,32 +40,31 @@ class RedirectHandler(webapp.RequestHandler):
         query = service.Query()
         query.feed = '/feeds/6752139154038265086/posts/default'
         query.max_results = 500
-        feed = blogger_service.Get(query.ToUri())
-        logging.info('%d urls fetched, fetch number %d' %(len(feed.entry), 1))
                 
-        allhrefs = map(lambda x: x.link[-1].href, feed.entry)
-
-        i = 1
-        while len(feed.entry) == 500:
+        allhrefs = []
+        i = 0
+        while 1:
             query.start_index = i*500 + 1
             feed = blogger_service.Get(query.ToUri())
             logging.info('%d urls fetched, fetch number %d' %(len(feed.entry), i + 1))
-            for entry in feed.entry:
-                allhrefs.append(entry.link[-1].href)
-            i += 1
+            allhrefs.extend([entry.link[-1].href for entry in feed.entry])
+            
+            if len(feed.entry) == 500:
+                i += 1
+            else:
+                break
         
         logging.info('retrieved %d urls total' %len(allhrefs))
         return allhrefs
 
-class StayPageHandler(webapp.RequestHandler):
+class StayPageHandler(webapp2.RequestHandler):
     def get(self):
-        entries = memcache.get("entries")
-        # entries = None
         # memcache.flush_all()
+        entries = memcache.get("entries")
         if entries is None:
             logging.info('cache miss')
             entries = self.get_cached_entries()
-            memcache.add("entries", entries, 43200)
+            memcache.set("entries", entries, 43200)
         elif len(entries[0]) != 5: # check for 5 elements per entry
             logging.info('flushing memcache')
             memcache.flush_all()
@@ -74,9 +80,10 @@ class StayPageHandler(webapp.RequestHandler):
         # entry = entries[-472]
         
         template_values = { 'entry' : entry, }
-
-        path = os.path.join(os.path.dirname(__file__), 'stay.html')
-        self.response.out.write(template.render(path, template_values))
+        
+        template = jinja_environment.get_template('stay.html')
+        
+        self.response.out.write(template.render(template_values))
         
     def get_cached_entries(self):
         blogger_service = service.GDataService()
@@ -86,17 +93,19 @@ class StayPageHandler(webapp.RequestHandler):
         query = service.Query()
         query.feed = '/feeds/6752139154038265086/posts/default'
         query.max_results = 500
-        feed = blogger_service.Get(query.ToUri())
-        logging.info('%d entries fetched, fetch number %d' %(len(feed.entry), 1))
-        entries = feed.entry
         
-        i = 1
-        while len(feed.entry) == 500:
+        entries = []
+        i = 0
+        while 1:
             query.start_index = i*500 + 1
             feed = blogger_service.Get(query.ToUri())
             logging.info('%d entries fetched, fetch number %d' %(len(feed.entry), i + 1))
             entries.extend(feed.entry)
-            i += 1
+            
+            if len(feed.entry) == 500:
+                i += 1
+            else:
+                break
         
         logging.info('retrieved %d entries total' %len(entries))
         
@@ -116,9 +125,12 @@ class StayPageHandler(webapp.RequestHandler):
         br_re = re.compile('(?:<br *?/?>)')
         n_re = re.compile('\n')
         
-        title = entry.title.text
-        content = entry.content.text
+        title = unicode(entry.title.text)
+        
+        content = unicode(entry.content.text)
+        
         imgurl = imgurl_re.findall(content)
+
         content = xml_style_re.sub(r'', content)
         content = ws_re.sub(r' ', content)
         content = ws2_re.sub(r'<', content)
@@ -137,10 +149,6 @@ class StayPageHandler(webapp.RequestHandler):
             'url' : url
             }
 
-def main():
-    logging.getLogger().setLevel(logging.DEBUG)
-    application = webapp.WSGIApplication([('/stay/?', StayPageHandler), ('.*', RedirectHandler)])
-    util.run_wsgi_app(application)
-
-if __name__ == '__main__':
-        main()
+app = webapp2.WSGIApplication([
+    ('/stay/?', StayPageHandler), 
+    ('.*', RedirectHandler)])

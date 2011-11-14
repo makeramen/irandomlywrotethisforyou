@@ -1,7 +1,8 @@
 application: irandomlywrotethisforyou
 version: 1
-runtime: python
+runtime: python27
 api_version: 1
+threadsafe: true
 
 handlers:
 - url: /robots.txt
@@ -16,4 +17,8 @@ handlers:
   static_dir: stylesheets
 
 - url: .*
-  script: main.py
+  script: main.app
+
+libraries:
+- name: jinja2
+  version: latest
