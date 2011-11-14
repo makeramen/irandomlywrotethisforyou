@@ -125,9 +125,9 @@ class StayPageHandler(webapp2.RequestHandler):
         br_re = re.compile('(?:<br *?/?>)')
         n_re = re.compile('\n')
         
-        title = unicode(entry.title.text)
+        title = unicode(entry.title.text, 'utf-8')
         
-        content = unicode(entry.content.text)
+        content = unicode(entry.content.text, 'utf-8')
         
         imgurl = imgurl_re.findall(content)
 
