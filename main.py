@@ -59,31 +59,35 @@ class RedirectHandler(webapp2.RequestHandler):
 
 class StayPageHandler(webapp2.RequestHandler):
     def get(self):
-        # memcache.flush_all()
-        entries = memcache.get("entries")
-        if entries is None:
-            logging.info('cache miss')
-            entries = self.get_cached_entries()
-            memcache.set("entries", entries, 43200)
-        elif len(entries[0]) != 5: # check for 5 elements per entry
-            logging.info('flushing memcache')
-            memcache.flush_all()
-            entries = self.get_cached_entries()
-            memcache.add("entries", entries, 43200)
-        else:
-            logging.info('cache hit')
-        
-        num = random.randint(0,len(entries)-1)
-        logging.info("num: %s" % num)
-        entry = entries[num]
-        #entry = entries[0]
-        # entry = entries[-472]
-        
-        template_values = { 'entry' : entry, }
-        
-        template = jinja_environment.get_template('stay.html')
-        
-        self.response.out.write(template.render(template_values))
+        try:
+            # memcache.flush_all()
+            entries = memcache.get("entries")
+            if entries is None:
+                logging.info('cache miss')
+                entries = self.get_cached_entries()
+                memcache.set("entries", entries, 43200)
+            elif len(entries[0]) != 5: # check for 5 elements per entry
+                logging.info('flushing memcache')
+                memcache.flush_all()
+                entries = self.get_cached_entries()
+                memcache.add("entries", entries, 43200)
+            else:
+                logging.info('cache hit')
+    
+            num = random.randint(0,len(entries)-1)
+            logging.info("num: %s" % num)
+            entry = entries[num]
+            #entry = entries[0]
+            # entry = entries[-472]
+    
+            template_values = { 'entry' : entry, }
+    
+            template = jinja_environment.get_template('stay.html')
+            
+            self.response.out.write(template.render(template_values))
+        except DeadlineExceededError:
+            return redirect('/stay')
+            
         
     def get_cached_entries(self):
         blogger_service = service.GDataService()
