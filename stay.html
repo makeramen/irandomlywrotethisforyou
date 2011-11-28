@@ -9,7 +9,7 @@
 	</head>
 
 	<body>
-		<div id="content">
+		<div id="wrapper">
 			<h2>{{ entry.date }}</h2>
 			<a href="{{ entry.url }}" target="_blank">
 				<h1>{{ entry.title }}</h1>
@@ -19,7 +19,9 @@
 				<img src="{{ entry.imgurl.0 }}" />
 			</a>
 			{% endif %}
-			<p>{{ entry.content }}</p>
+			<div id="content">
+				{{ entry.content }}
+			</div>
 		</div>
 	</body>
 </html>

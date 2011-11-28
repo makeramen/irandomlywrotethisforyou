@@ -12,12 +12,26 @@ import webapp2
 import jinja2
 
 from google.appengine.api import memcache
+from google.appengine.runtime import DeadlineExceededError
 from gdata import service
 
 logging.getLogger().setLevel(logging.DEBUG)
 
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__), encoding='utf-8'))
+
+
+imgurl_re = re.compile(r'href="([^"]*)')
+
+xml_style_re = re.compile(r'<(?:xml|style)>.*?</(?:xml|style)>')
+ws_re = re.compile(r'\s+')
+ws2_re = re.compile(r' <')
+ie_re = re.compile(r'<!--.*?-->')
+non_br_p_re = re.compile(r'<\s*(?!br|/?(?:p|div)).*?>')
+br_re = re.compile(r'<br *?/?>')
+p_re = re.compile(r'</?(?:p|div).*?>')
+n_re = re.compile(r'\n')
+dbln_re = re.compile(r'\n{3,}')
 
 class RedirectHandler(webapp2.RequestHandler):
     def get(self):
@@ -60,7 +74,7 @@ class RedirectHandler(webapp2.RequestHandler):
 class StayPageHandler(webapp2.RequestHandler):
     def get(self):
         try:
-            # memcache.flush_all()
+            memcache.flush_all()
             entries = memcache.get("entries")
             if entries is None:
                 logging.info('cache miss')
@@ -77,8 +91,9 @@ class StayPageHandler(webapp2.RequestHandler):
             num = random.randint(0,len(entries)-1)
             logging.info("num: %s" % num)
             entry = entries[num]
-            #entry = entries[0]
+            # entry = entries[0]
             # entry = entries[-472]
+            # entry = entries[-165]
     
             template_values = { 'entry' : entry, }
     
@@ -114,20 +129,10 @@ class StayPageHandler(webapp2.RequestHandler):
         logging.info('retrieved %d entries total' %len(entries))
         
         cachedentries = map(self.format_entry, entries)
-
+        
         return cachedentries
     
     def format_entry(self, entry):
-        
-        imgurl_re = re.compile(r'href="([^"]*)')
-        
-        xml_style_re = re.compile(r'<(?:xml|style)>.*?</(?:xml|style)>')
-        ws_re = re.compile(r'\s+')
-        ws2_re = re.compile(r' <')
-        ie_re = re.compile(r'<!--.*?-->')
-        non_br_re = re.compile(r'<(?!br).*?>')
-        br_re = re.compile('(?:<br *?/?>)')
-        n_re = re.compile('\n')
         
         title = unicode(entry.title.text, 'utf-8')
         
@@ -138,9 +143,11 @@ class StayPageHandler(webapp2.RequestHandler):
         content = xml_style_re.sub(r'', content)
         content = ws_re.sub(r' ', content)
         content = ws2_re.sub(r'<', content)
-        content = non_br_re.sub(r'', content)
+        content = non_br_p_re.sub(r'', content)
         content = br_re.sub(r'\n', content)
+        content = p_re.sub(r'\n\n', content)
         content = content.strip()
+        content = dbln_re.sub(r'\n\n', content)
         content = n_re.sub(r'<br />', content)
 
         date = datetime.datetime.strptime(entry.published.text[:10], "%Y-%m-%d").strftime("%A, %B %d, %Y")
