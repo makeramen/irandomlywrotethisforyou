@@ -74,7 +74,7 @@ class RedirectHandler(webapp2.RequestHandler):
 class StayPageHandler(webapp2.RequestHandler):
     def get(self):
         try:
-            memcache.flush_all()
+            # memcache.flush_all()
             entries = memcache.get("entries")
             if entries is None:
                 logging.info('cache miss')
