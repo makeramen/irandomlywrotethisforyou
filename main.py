@@ -46,8 +46,8 @@ class RedirectHandler(webapp2.RequestHandler):
                 logging.info('cache hit')
         
             self.redirect(allhrefs[random.randint(0,len(allhrefs) - 1)])
-        except DeadlineExceededError:
-            logging.info('failing, redirecting to self')
+        except:
+            logging.warning('error, redirecting to self: %s' % e)
             return redirect('/')
 
     def get_hrefs(self):
@@ -104,8 +104,8 @@ class StayPageHandler(webapp2.RequestHandler):
             template = jinja_environment.get_template('stay.html')
             
             self.response.out.write(template.render(template_values))
-        except DeadlineExceededError:
-            logging.info('failing, redirecting to self')
+        except:
+            logging.warning('error, redirecting to self: %s' % e)
             return redirect('/stay')
             
         
