@@ -35,16 +35,20 @@ dbln_re = re.compile(r'\n{3,}')
 
 class RedirectHandler(webapp2.RequestHandler):
     def get(self):
-        # memcache.flush_all()
-        allhrefs = memcache.get("allhrefs")
-        if allhrefs is None:
-            logging.info('cache miss')
-            allhrefs = self.get_hrefs()
-            memcache.set("allhrefs", allhrefs, 43200)
-        else:
-            logging.info('cache hit')
+        try:
+            # memcache.flush_all()
+            allhrefs = memcache.get("allhrefs")
+            if allhrefs is None:
+                logging.info('cache miss')
+                allhrefs = self.get_hrefs()
+                memcache.set("allhrefs", allhrefs, 43200)
+            else:
+                logging.info('cache hit')
         
-        self.redirect(allhrefs[random.randint(0,len(allhrefs) - 1)])
+            self.redirect(allhrefs[random.randint(0,len(allhrefs) - 1)])
+        except DeadlineExceededError:
+            logging.info('failing, redirecting to self')
+            return redirect('/')
 
     def get_hrefs(self):
         blogger_service = service.GDataService()
@@ -101,6 +105,7 @@ class StayPageHandler(webapp2.RequestHandler):
             
             self.response.out.write(template.render(template_values))
         except DeadlineExceededError:
+            logging.info('failing, redirecting to self')
             return redirect('/stay')
             
         
