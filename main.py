@@ -12,7 +12,6 @@ import webapp2
 import jinja2
 
 from google.appengine.api import memcache
-from google.appengine.runtime import DeadlineExceededError
 from gdata import service
 
 logging.getLogger().setLevel(logging.DEBUG)
@@ -46,9 +45,9 @@ class RedirectHandler(webapp2.RequestHandler):
                 logging.info('cache hit')
         
             self.redirect(allhrefs[random.randint(0,len(allhrefs) - 1)])
-        except:
+        except Exception as e:
             logging.warning('error, redirecting to self: %s' % e)
-            return redirect('/')
+            return self.redirect('/')
 
     def get_hrefs(self):
         blogger_service = service.GDataService()
@@ -104,9 +103,9 @@ class StayPageHandler(webapp2.RequestHandler):
             template = jinja_environment.get_template('stay.html')
             
             self.response.out.write(template.render(template_values))
-        except:
+        except Exception as e:
             logging.warning('error, redirecting to self: %s' % e)
-            return redirect('/stay')
+            return self.redirect('/stay')
             
         
     def get_cached_entries(self):
