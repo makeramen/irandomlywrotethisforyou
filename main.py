@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import os
-import gdata
-import atom
 import random
 import re
 import datetime

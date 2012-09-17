@@ -41,7 +41,7 @@ import gdata.youtube
 
 YOUTUBE_SERVER = 'gdata.youtube.com'
 YOUTUBE_SERVICE = 'youtube'
-YOUTUBE_CLIENTLOGIN_AUTHENTICATION_URL = 'https://www.google.com/youtube/accounts/ClientLogin'
+YOUTUBE_CLIENTLOGIN_AUTHENTICATION_URL = 'https://www.google.com/accounts/ClientLogin'
 YOUTUBE_SUPPORTED_UPLOAD_TYPES = ('mov', 'avi', 'wmv', 'mpg', 'quicktime',
                                   'flv', 'mp4', 'x-flv')
 YOUTUBE_QUERY_VALID_TIME_PARAMETERS = ('today', 'this_week', 'this_month',
@@ -52,13 +52,13 @@ YOUTUBE_QUERY_VALID_RACY_PARAMETERS = ('include', 'exclude')
 YOUTUBE_QUERY_VALID_FORMAT_PARAMETERS = ('1', '5', '6')
 YOUTUBE_STANDARDFEEDS = ('most_recent', 'recently_featured',
                          'top_rated', 'most_viewed','watch_on_mobile')
-YOUTUBE_UPLOAD_URI = 'http://uploads.gdata.youtube.com/feeds/api/users'
-YOUTUBE_UPLOAD_TOKEN_URI = 'http://gdata.youtube.com/action/GetUploadToken'
-YOUTUBE_VIDEO_URI = 'http://gdata.youtube.com/feeds/api/videos'
-YOUTUBE_USER_FEED_URI = 'http://gdata.youtube.com/feeds/api/users'
-YOUTUBE_PLAYLIST_FEED_URI = 'http://gdata.youtube.com/feeds/api/playlists'
+YOUTUBE_UPLOAD_URI = 'https://uploads.gdata.youtube.com/feeds/api/users'
+YOUTUBE_UPLOAD_TOKEN_URI = 'https://gdata.youtube.com/action/GetUploadToken'
+YOUTUBE_VIDEO_URI = 'https://gdata.youtube.com/feeds/api/videos'
+YOUTUBE_USER_FEED_URI = 'https://gdata.youtube.com/feeds/api/users'
+YOUTUBE_PLAYLIST_FEED_URI = 'https://gdata.youtube.com/feeds/api/playlists'
 
-YOUTUBE_STANDARD_FEEDS = 'http://gdata.youtube.com/feeds/api/standardfeeds'
+YOUTUBE_STANDARD_FEEDS = 'https://gdata.youtube.com/feeds/api/standardfeeds'
 YOUTUBE_STANDARD_TOP_RATED_URI = '%s/%s' % (YOUTUBE_STANDARD_FEEDS, 'top_rated')
 YOUTUBE_STANDARD_MOST_VIEWED_URI = '%s/%s' % (YOUTUBE_STANDARD_FEEDS,
     'most_viewed')
@@ -136,6 +136,8 @@ class YouTubeService(gdata.service.GDataService):
         http://code.google.com/apis/youtube/dashboard to obtain a (free) key.
   """
 
+  ssl = True
+
   def __init__(self, email=None, password=None, source=None,
                server=YOUTUBE_SERVER, additional_headers=None, client_id=None,
                developer_key=None, **kwargs):
@@ -166,6 +168,9 @@ class YouTubeService(gdata.service.GDataService):
 
     if developer_key is not None:
       self.additional_headers['X-GData-Key'] = 'key=%s' % developer_key
+
+    if 'GData-Version' not in self.additional_headers:
+      self.additional_headers['GData-Version'] = 1
 
     self.auth_service_url = YOUTUBE_CLIENTLOGIN_AUTHENTICATION_URL
 
@@ -739,8 +744,8 @@ class YouTubeService(gdata.service.GDataService):
     for link in video_entry.link:
       if link.rel == 'edit':
         edit_uri = link.href
-    return self.Put(video_entry, uri=edit_uri,
-                    converter=gdata.youtube.YouTubeVideoEntryFromString)
+        return self.Put(video_entry, uri=edit_uri, 
+        	converter=gdata.youtube.YouTubeVideoEntryFromString)
 
   def DeleteVideoEntry(self, video_entry):
     """Deletes a video entry.
@@ -756,7 +761,7 @@ class YouTubeService(gdata.service.GDataService):
     for link in video_entry.link:
       if link.rel == 'edit':
         edit_uri = link.href
-    return self.Delete(edit_uri)
+        return self.Delete(edit_uri)
 
   def AddRating(self, rating_value, video_entry):
     """Add a rating to a video entry.
@@ -1339,12 +1344,12 @@ class YouTubeService(gdata.service.GDataService):
                                      'body': HTTP body of the server response})
     """
     result = self.Query(query.ToUri())
-    if isinstance(query, YouTubeVideoQuery):
-      return gdata.youtube.YouTubeVideoFeedFromString(result.ToString())
-    elif isinstance(query, YouTubeUserQuery):
+    if isinstance(query, YouTubeUserQuery):
       return gdata.youtube.YouTubeUserFeedFromString(result.ToString())
     elif isinstance(query, YouTubePlaylistQuery):
       return gdata.youtube.YouTubePlaylistFeedFromString(result.ToString())
+    elif isinstance(query, YouTubeVideoQuery):
+      return gdata.youtube.YouTubeVideoFeedFromString(result.ToString())
     else:
       return result
 
@@ -1539,7 +1544,7 @@ class YouTubeUserQuery(YouTubeVideoQuery):
     else:
       feed = "http://%s/feeds/users" % (YOUTUBE_SERVER)
 
-    YouTubeVideoQuery.__init__(self, feed, text_query=text_query,
+    YouTubeVideoQuery.__init__(self, feed=feed, text_query=text_query,
                                params=params, categories=categories)
 
 
@@ -1559,5 +1564,5 @@ class YouTubePlaylistQuery(YouTubeVideoQuery):
     else:
       feed = "http://%s/feeds/playlists" % (YOUTUBE_SERVER)
 
-    YouTubeVideoQuery.__init__(self, feed, text_query=text_query,
+    YouTubeVideoQuery.__init__(self, feed=feed, text_query=text_query,
                                params=params, categories=categories)

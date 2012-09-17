@@ -1616,18 +1616,18 @@ DOCUMENT_LIST_FEED = """<?xml version='1.0' encoding='UTF-8'?>
 <ns0:feed xmlns:ns0="http://www.w3.org/2005/Atom" xmlns:ns2="http://schemas.google.com/g/2005" xmlns:ns3="http://schemas.google.com/docs/2007"><ns1:totalResults
 xmlns:ns1="http://a9.com/-/spec/opensearchrss/1.0/">2</ns1:totalResults><ns1:startIndex
 xmlns:ns1="http://a9.com/-/spec/opensearchrss/1.0/">1</ns1:startIndex><ns0:entry><ns0:content
-src="http://foo.com/fm?fmcmd=102&amp;key=supercalifragilisticexpeadocious"
+src="https://foo.com/fm?fmcmd=102&amp;key=supercalifragilisticexpeadocious"
 type="text/html"
 /><ns0:author><ns0:name>test.user</ns0:name><ns0:email>test.user@gmail.com</ns0:email></ns0:author><ns0:category
 label="spreadsheet" scheme="http://schemas.google.com/g/2005#kind"
 term="http://schemas.google.com/docs/2007#spreadsheet"
-/><ns0:id>http://docs.google.com/feeds/documents/private/full/spreadsheet%3Asupercalifragilisticexpeadocious</ns0:id><ns0:link
-href="http://foo.com/ccc?key=supercalifragilisticexpeadocious" rel="alternate"
+/><ns0:id>https://docs.google.com/feeds/documents/private/full/spreadsheet%3Asupercalifragilisticexpeadocious</ns0:id><ns0:link
+href="https://foo.com/ccc?key=supercalifragilisticexpeadocious" rel="alternate"
 type="text/html" /><ns0:link
-href="http://foo.com/feeds/worksheets/supercalifragilisticexpeadocious/private/full"
+href="https://foo.com/feeds/worksheets/supercalifragilisticexpeadocious/private/full"
 rel="http://schemas.google.com/spreadsheets/2006#worksheetsfeed"
 type="application/atom+xml" /><ns0:link
-href="http://docs.google.com/feeds/documents/private/full/spreadsheet%3Asupercalifragilisticexpeadocious"
+href="https://docs.google.com/feeds/documents/private/full/spreadsheet%3Asupercalifragilisticexpeadocious"
 rel="self" type="application/atom+xml" /><ns0:title type="text">Test Spreadsheet</ns0:title><ns0:updated>2007-07-03T18:03:32.045Z</ns0:updated>
 <ns2:feedLink href="http://docs.google.com/feeds/acl/private/full/spreadsheet%3Afoofoofoo" rel="http://schemas.google.com/acl/2007#accessControlList"/>
 <ns2:resourceId>document:dfrkj84g_3348jbxpxcd</ns2:resourceId>
@@ -1670,17 +1670,17 @@ test.user@gmail.com</ns0:title><ns0:updated>2007-07-09T23:07:21.898Z</ns0:update
 
 DOCUMENT_LIST_ENTRY = """<?xml version='1.0' encoding='UTF-8'?>
 <ns0:entry xmlns:ns0="http://www.w3.org/2005/Atom" xmlns:ns1="http://schemas.google.com/g/2005" xmlns:ns2="http://schemas.google.com/docs/2007"><ns0:content
-src="http://foo.com/fm?fmcmd=102&amp;key=supercalifragilisticexpealidocious" type="text/html"/>
+src="https://foo.com/fm?fmcmd=102&amp;key=supercalifragilisticexpealidocious" type="text/html"/>
 <ns0:author><ns0:name>test.user</ns0:name><ns0:email>test.user@gmail.com</ns0:email></ns0:author>
 <ns0:category label="spreadsheet" scheme="http://schemas.google.com/g/2005#kind"
 term="http://schemas.google.com/docs/2007#spreadsheet"
-/><ns0:id>http://docs.google.com/feeds/documents/private/full/spreadsheet%3Asupercalifragilisticexpealidocious</ns0:id>
-<ns0:link href="http://foo.com/ccc?key=supercalifragilisticexpealidocious"
+/><ns0:id>https://docs.google.com/feeds/documents/private/full/spreadsheet%3Asupercalifragilisticexpealidocious</ns0:id>
+<ns0:link href="https://foo.com/ccc?key=supercalifragilisticexpealidocious"
 rel="alternate" type="text/html" /><ns0:link
-href="http://foo.com/feeds/worksheets/supercalifragilisticexpealidocious/private/full"
+href="https://foo.com/feeds/worksheets/supercalifragilisticexpealidocious/private/full"
 rel="http://schemas.google.com/spreadsheets/2006#worksheetsfeed"
 type="application/atom+xml" /><ns0:link
-href="http://docs.google.com/feeds/documents/private/full/spreadsheet%3Asupercalifragilisticexpealidocious"
+href="https://docs.google.com/feeds/documents/private/full/spreadsheet%3Asupercalifragilisticexpealidocious"
 rel="self" type="application/atom+xml" />
 <ns0:title type="text">Test Spreadsheet</ns0:title><ns0:updated>2007-07-03T18:03:32.045Z</ns0:updated>
 <ns1:resourceId>spreadsheet:supercalifragilisticexpealidocious</ns1:resourceId>
@@ -1695,17 +1695,17 @@ rel="self" type="application/atom+xml" />
 
 DOCUMENT_LIST_ENTRY_V3 = """<?xml version='1.0' encoding='UTF-8'?>
 <ns0:entry xmlns:ns0="http://www.w3.org/2005/Atom" xmlns:ns1="http://schemas.google.com/g/2005" xmlns:ns2="http://schemas.google.com/docs/2007"><ns0:content
-src="http://foo.com/fm?fmcmd=102&amp;key=supercalifragilisticexpealidocious" type="text/html"/>
+src="https://foo.com/fm?fmcmd=102&amp;key=supercalifragilisticexpealidocious" type="text/html"/>
 <ns0:author><ns0:name>test.user</ns0:name><ns0:email>test.user@gmail.com</ns0:email></ns0:author>
 <ns0:category label="spreadsheet" scheme="http://schemas.google.com/g/2005#kind"
 term="http://schemas.google.com/docs/2007#spreadsheet"
-/><ns0:id>http://docs.google.com/feeds/documents/private/full/spreadsheet%3Asupercalifragilisticexpealidocious</ns0:id>
-<ns0:link href="http://foo.com/ccc?key=supercalifragilisticexpealidocious"
+/><ns0:id>https://docs.google.com/feeds/documents/private/full/spreadsheet%3Asupercalifragilisticexpealidocious</ns0:id>
+<ns0:link href="https://foo.com/ccc?key=supercalifragilisticexpealidocious"
 rel="alternate" type="text/html" /><ns0:link
-href="http://foo.com/feeds/worksheets/supercalifragilisticexpealidocious/private/full"
+href="https://foo.com/feeds/worksheets/supercalifragilisticexpealidocious/private/full"
 rel="http://schemas.google.com/spreadsheets/2006#worksheetsfeed"
 type="application/atom+xml" /><ns0:link
-href="http://docs.google.com/feeds/documents/private/full/spreadsheet%3Asupercalifragilisticexpealidocious"
+href="https://docs.google.com/feeds/documents/private/full/spreadsheet%3Asupercalifragilisticexpealidocious"
 rel="self" type="application/atom+xml" />
 <ns0:link rel="http://schemas.google.com/docs/2007#parent" type="application/atom+xml"
 href="http://docs.google.com/feeds/default/private/full/folder%3A12345" title="AFolderName" />
@@ -1718,8 +1718,16 @@ href="http://docs.google.com/feeds/default/private/full/folder%3A12345" title="A
 <ns1:lastViewed>2009-03-05T07:48:21.493Z</ns1:lastViewed>
 <ns2:writersCanInvite value='true'/>
 <ns1:quotaBytesUsed>1000</ns1:quotaBytesUsed>
-<ns1:feedLink rel="http://schemas.google.com/acl/2007#accessControlList" href="http://docs.google.com/feeds/default/private/full/spreadsheet%3Asupercalifragilisticexpealidocious/acl" />
-<ns1:feedLink rel="http://schemas.google.com/docs/2007/revisions" href="http://docs.google.com/feeds/default/private/full/spreadsheet%3Asupercalifragilisticexpealidocious/revisions" />
+<ns1:feedLink rel="http://schemas.google.com/acl/2007#accessControlList" href="https://docs.google.com/feeds/default/private/full/spreadsheet%3Asupercalifragilisticexpealidocious/acl" />
+<ns1:feedLink rel="http://schemas.google.com/docs/2007/revisions" href="https://docs.google.com/feeds/default/private/full/spreadsheet%3Asupercalifragilisticexpealidocious/revisions" />
+<ns0:category scheme="http://schemas.google.com/g/2005/labels" term="http://schemas.google.com/g/2005/labels#starred" label="starred"/>
+<ns0:category scheme="http://schemas.google.com/g/2005/labels" term="http://schemas.google.com/g/2005/labels#viewed" label="viewed"/>
+<ns0:category scheme="http://schemas.google.com/g/2005/labels" term="http://schemas.google.com/g/2005/labels#hidden" label="hidden"/>
+<ns0:category scheme="http://schemas.google.com/g/2005/labels" term="http://schemas.google.com/g/2005/labels#trashed" label="trashed"/>
+<ns0:category scheme="http://schemas.google.com/g/2005/labels" term="http://schemas.google.com/g/2005/labels#mine" label="mine"/>
+<ns0:category scheme="http://schemas.google.com/g/2005/labels" term="http://schemas.google.com/g/2005/labels#private" label="private"/>
+<ns0:category scheme="http://schemas.google.com/g/2005/labels" term="http://schemas.google.com/g/2005/labels#shared-with-domain" label="shared-with-domain"/>
+<ns0:category scheme="http://schemas.google.com/g/2005/labels" term="http://schemas.google.com/g/2005/labels#restricted-download" label="restricted-download"/>
 </ns0:entry>
 """
 
@@ -1731,6 +1739,31 @@ DOCUMENT_LIST_ACL_ENTRY = """<?xml version='1.0' encoding='UTF-8'?>
   <gAcl:role value='writer'/>
   <gAcl:scope type='user' value='user@gmail.com'/>
 </entry>"""
+
+
+DOCUMENT_LIST_ACL_WITHKEY_ENTRY = """<?xml version='1.0' encoding='UTF-8'?>
+<entry xmlns="http://www.w3.org/2005/Atom"
+       xmlns:gAcl='http://schemas.google.com/acl/2007'>
+  <category scheme='http://schemas.google.com/g/2005#kind'
+            term='http://schemas.google.com/acl/2007#accessRule'/>
+  <gAcl:withKey key='somekey'><gAcl:role value='writer' /></gAcl:withKey>
+  <gAcl:scope type='domain' value='example.com' />
+</entry>"""
+
+
+DOCUMENT_LIST_ACL_ADDITIONAL_ROLE_ENTRY = """<?xml version='1.0' encoding='UTF-8'?>
+<entry xmlns="http://www.w3.org/2005/Atom"
+       xmlns:gAcl='http://schemas.google.com/acl/2007'>
+  <category scheme='http://schemas.google.com/g/2005#kind'
+            term='http://schemas.google.com/acl/2007#accessRule'/>
+  <gAcl:additionalRole value='commenter' />
+  <gAcl:withKey key='somekey'>
+    <gAcl:role value='writer' />
+    <gAcl:additionalRole value='commenter' />
+  </gAcl:withKey>
+  <gAcl:scope type='domain' value='example.com' />
+</entry>"""
+
 
 DOCUMENT_LIST_ACL_FEED = """<?xml version='1.0' encoding='UTF-8'?>
 <feed xmlns="http://www.w3.org/2005/Atom" xmlns:openSearch="http://a9.com/-/spec/opensearchrss/1.0/"
@@ -1794,7 +1827,7 @@ DOCUMENT_LIST_REVISION_FEED = """<?xml version='1.0' encoding='UTF-8'?>
       href="https://docs.google.com/Doc?id=doc_id&amp;revision=2"/>
   <link rel="self" type="application/atom+xml"
       href="https://docs.google.com/feeds/default/private/full/resource_id/revisions/2"/>
-  <link rel='http://schemas.google.com/docs/2007#publish' type='text/html' href='http://docs.google.com/View?docid=dfr4&amp;pageview=1&amp;hgd=1'/>   
+  <link rel='http://schemas.google.com/docs/2007#publish' type='text/html' href='https://docs.google.com/View?docid=dfr4&amp;pageview=1&amp;hgd=1'/>   
   <author>
     <name>another_user</name>
     <email>another_user@gmail.com</email>
@@ -1804,6 +1837,20 @@ DOCUMENT_LIST_REVISION_FEED = """<?xml version='1.0' encoding='UTF-8'?>
   <docs:publishOutsideDomain value="false"/>
 </entry>
 </feed>
+"""
+
+DOCUMENT_LIST_METADATA = """
+<entry xmlns="http://www.w3.org/2005/Atom"
+    xmlns:docs="http://schemas.google.com/docs/2007"
+    xmlns:gd="http://schemas.google.com/g/2005"
+    xmlns:gAcl="http://schemas.google.com/acl/2007"
+    gd:etag="W/&quot;AkYNRnc_eSt7ImA9WxBUFks.&quot;">
+  <docs:additionalRoleInfo kind='document'>
+   <docs:additionalRoleSet primaryRole='reader'>
+     <gAcl:additionalRole value='commenter' />
+   </docs:additionalRoleSet>
+  </docs:additionalRoleInfo>
+</entry>
 """
 
 BATCH_ENTRY = """<?xml version='1.0' encoding='UTF-8'?>
@@ -5377,6 +5424,7 @@ ANALYTICS_DATA_FEED = '''
     <dxp:metric confidenceInterval='0.0' name='ga:visits' type='integer' value='136540'/>
     <dxp:metric confidenceInterval='0.0' name='ga:bounces' type='integer' value='101535'/>
   </dxp:aggregates>
+  <dxp:containsSampledData>true</dxp:containsSampledData>
   <dxp:dataSource>
     <dxp:tableId>ga:1174</dxp:tableId>
     <dxp:tableName>www.googlestore.com</dxp:tableName>
@@ -5493,3 +5541,523 @@ ANALYTICS_MGMT_ADV_SEGMENT_FEED = '''
 </feed>
 '''
 
+MULTIDOMAIN_USER_ENTRY = """<?xml version="1.0"?>
+<atom:entry xmlns:atom='http://www.w3.org/2005/Atom' xmlns:apps='http://schemas.google.com/apps/2006'>
+  <apps:property name="password" value="51eea05d46317fadd5cad6787a8f562be90b4446"/>
+  <apps:property name="hashFunction" value="SHA-1"/>
+  <apps:property name="userEmail" value="liz@example.com"/>
+  <apps:property name="firstName" value="Liz"/>
+  <apps:property name="lastName" value="Smith"/>
+  <apps:property name="isAdmin" value="true"/>
+</atom:entry>"""
+
+MULTIDOMAIN_USER_FEED = """<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:openSearch="http://a9.com/-/spec/opensesearchrss/1.0/"
+  xmlns:apps="http://schemas.google.com/apps/2006">
+  <id>https://apps-apis.google.com/a/feeds/user/2.0/example.com</id>
+  <updated>2010-01-26T23:38:13.215Z</updated>
+  <link rel="http://schemas.google.com/g/2005#feed"
+  type="application/atom+xml" href="https://apps-apis.google.com/a/feeds/user/2.0/example.com" />
+  <link rel="http://schemas.google.com/g/2005#post"
+  type="application/atom+xml" href="https://apps-apis.google.com/a/feeds/user/2.0/example.com" />
+  <link rel="self" type="application/atom+xml"
+  href="https://apps-apis.google.com/a/feeds/user/2.0/example.com?start=admin%40example.com" />
+  <openSearch:startIndex>1</openSearch:startIndex>
+  <entry>
+    <id>https://apps-apis.google.com/a/feeds/user/2.0/example.com/admin%40example.com</id>
+    <updated>2010-01-26T23:38:13.210Z</updated>
+    <link rel="self" type="application/atom+xml"
+    href="https://apps-apis.google.com/a/feeds/user/2.0/example.com/admin%40example.com" />
+    <link rel="edit" type="application/atom+xml"
+    href="https://apps-apis.google.com/a/feeds/user/2.0/example.com/admin%40example.com" />
+    <apps:property name="lastName" value="Brown" />
+    <apps:property name="isChangePasswordAtNextLogin" value="false" />
+    <apps:property name="isSuspended" value="false" />
+    <apps:property name="userEmail" value="admin@example.com" />
+    <apps:property name="isAdmin" value="true" />
+    <apps:property name="firstName" value="Joe" />
+    <apps:property name="ipWhitelisted" value="false" />
+  </entry>
+  <entry>
+    <id>https://apps-apis.google.com/a/feeds/user/2.0/example.com/liz%40example.com</id>
+    <updated>2010-01-26T23:38:13.210Z</updated>
+    <link rel="self" type="application/atom+xml"
+    href="https://apps-apis.google.com/a/feeds/user/2.0/example.com/liz%40example.com" />
+    <link rel="edit" type="application/atom+xml"
+    href="https://apps-apis.google.com/a/feeds/user/2.0/example.com/liz%40example.com" />
+    <apps:property name="lastName" value="Smith" />
+    <apps:property name="isChangePasswordAtNextLogin" value="false" />
+    <apps:property name="isSuspended" value="false" />
+    <apps:property name="userEmail" value="liz@example.com" />
+    <apps:property name="isAdmin" value="true" />
+    <apps:property name="firstName" value="Elizabeth" />
+    <apps:property name="ipWhitelisted" value="false" />
+  </entry>
+</feed>"""
+
+MULTIDOMAIN_USER_RENAME_REQUEST = """<?xml version='1.0' encoding='UTF-8'?>
+<entry xmlns='http://www.w3.org/2005/Atom' xmlns:apps='http://schemas.google.com/apps/2006'>
+  <apps:property name='newEmail' value='liz@newexample4liz.com'/>
+</entry>"""
+
+MULTIDOMAIN_ALIAS_ENTRY = """<?xml version='1.0' encoding='UTF-8'?>
+<entry xmlns='http://www.w3.org/2005/Atom' xmlns:apps='http://schemas.google.com/apps/2006'>
+  <id>https://apps-apis.google.com/a/feeds/alias/2.0/gethelp_example.com/helpdesk%40gethelp_example.com</id>
+  <updated>2008-10-17T15:02:45.646Z</updated>
+  <link rel='self' type='application/atom+xml'
+  href='https://apps-apis.google.com/a/feeds/alias/2.0/gethelp_example.com/helpdesk%40gethelp_example.com'/>
+  <link rel='edit' type='application/atom+xml'
+  href='https://apps-apis.google.com/a/feeds/alias/2.0/gethelp_example.com/helpdesk%40gethelp_example.com'/>
+  <apps:property name="userEmail" value="liz@example.com" />
+  <apps:property name="aliasEmail" value="helpdesk@gethelp_example.com" />
+</entry>"""
+
+MULTIDOMAIN_ALIAS_FEED = """<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:openSearch="http://a9.com/-/spec/opensearchrss/1.0/" xmlns:apps="http://schemas.google.com/apps/2006">
+  <id>https://apps-apis.google.com/a/feeds/alias/2.0/gethelp_example.com</id>
+  <updated>2010-01-26T23:38:13.215Z</updated>
+  <link rel="http://schemas.google.com/g/2005#feed"
+  type="application/atom+xml" href="https://apps-apis.google.com/a/feeds/alias/2.0/gethelp_example.com" />
+  <link rel="http://schemas.google.com/g/2005#post"
+  type="application/atom+xml" href="https://apps-apis.google.com/a/feeds/alias/2.0/gethelp_example.com" />
+  <link rel="self" type="application/atom+xml"
+  href="https://apps-apis.google.com/a/feeds/alias/2.0/gethelp_example.com?start=helpdesk%40gethelp_example.com" />
+  <openSearch:startIndex>1</openSearch:startIndex>
+  <entry>
+    <id>https://apps-apis.google.com/a/feeds/alias/2.0/gethelp_example.com/helpdesk%40gethelp_example.com</id>
+    <updated>2010-01-26T23:38:13.210Z</updated>
+    <link rel="self" type="application/atom+xml"
+    href="https://apps-apis.google.com/a/feeds/alias/2.0/gethelp_example.com/helpdesk%40gethelp_example.com" />
+    <link rel="edit" type="application/atom+xml"
+    href="https://apps-apis.google.com/a/feeds/alias/2.0/gethelp_example.com/helpdesk%40gethelp_example.com" />
+    <apps:property name="userEmail" value="liz@example.com" />
+    <apps:property name="aliasEmail" value="helpdesk@gethelp_example.com" />
+  </entry>
+  <entry>
+    <id>https://apps-apis.google.com/a/feeds/alias/2.0/gethelp_example.com/support%40gethelp_example.com</id>
+    <updated>2010-01-26T23:38:13.210Z</updated>
+    <link rel="self" type="application/atom+xml"
+    href="https://apps-apis.google.com/a/feeds/alias/2.0/gethelp_example.com/support%40gethelp_example.com" />
+    <link rel="edit" type="application/atom+xml"
+    href="https://apps-apis.google.com/a/feeds/alias/2.0/gethelp_example.com/support%40gethelp_example.com" />
+    <apps:property name="userEmail" value="joe@example.com" />
+    <apps:property name="aliasEmail" value="support@gethelp_example.com" />
+  </entry>
+</feed>"""
+
+USER_ENTRY1 = """<?xml version='1.0' encoding='UTF-8'?>
+<entry xmlns='http://www.w3.org/2005/Atom' xmlns:apps='http://schemas.google.com/apps/2006' xmlns:gd='http://schemas.google.com/g/2005'>
+  <id>http://apps-apis.google.com/a/feeds/srkapps.com/user/2.0/abcd12310</id>
+  <updated>1970-01-01T00:00:00.000Z</updated>
+  <category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/apps/2006#user'/>
+  <title type='text'>abcd12310</title>
+  <link rel='self' type='application/atom+xml' href='http://apps-apis.google.com/a/feeds/srkapps.com/user/2.0/abcd12310'/>
+  <link rel='edit' type='application/atom+xml' href='http://apps-apis.google.com/a/feeds/srkapps.com/user/2.0/abcd12310'/>
+  <apps:login userName='abcd12310' suspended='false' ipWhitelisted='false' admin='false' changePasswordAtNextLogin='false' agreedToTerms='false'/><apps:quota limit='25600'/>
+  <apps:name familyName='efgh3' givenName='abcd33'/>
+  <gd:feedLink rel='http://schemas.google.com/apps/2006#user.nicknames' href='http://apps-apis.google.com/a/feeds/srkapps.com/nickname/2.0?username=abcd12310'/>
+  <gd:feedLink rel='http://schemas.google.com/apps/2006#user.emailLists' href='http://apps-apis.google.com/a/feeds/srkapps.com/emailList/2.0?recipient=abcd12310%40srkapps.com'/>
+</entry>"""
+
+USER_FEED1 = """<?xml version='1.0' encoding='utf-8'?>
+<ns0:feed xmlns:ns0="http://www.w3.org/2005/Atom">
+  <ns0:category scheme="http://schemas.google.com/g/2005#kind"
+  term="http://schemas.google.com/apps/2006#user" />
+  <ns0:id>
+  https://apps-apis.google.com/a/feeds/srkapps.com/user/2.0</ns0:id>
+  <ns1:startIndex xmlns:ns1="http://a9.com/-/spec/opensearchrss/1.0/">
+  1</ns1:startIndex>
+  <ns0:title type="text">Users</ns0:title>
+  <ns0:link href="https://apps-apis.google.com/a/feeds/srkapps.com/user/2.0"
+  rel="http://schemas.google.com/g/2005#feed"
+  type="application/atom+xml" />
+  <ns0:link href="https://apps-apis.google.com/a/feeds/srkapps.com/user/2.0"
+  rel="http://schemas.google.com/g/2005#post"
+  type="application/atom+xml" />
+  <ns0:link href="https://apps-apis.google.com/a/feeds/srkapps.com/user/2.0?startUsername=user8306"
+  rel="self" type="application/atom+xml" />
+  <ns0:updated>1970-01-01T00:00:00.000Z</ns0:updated>
+  <ns0:entry>
+    <ns1:name familyName="LastName8306"
+    givenName="FirstName8306"
+    xmlns:ns1="http://schemas.google.com/apps/2006" />
+    <ns0:category scheme="http://schemas.google.com/g/2005#kind"
+    term="http://schemas.google.com/apps/2006#user" />
+    <ns0:id>
+    https://apps-apis.google.com/a/feeds/srkapps.com/user/2.0/user8306</ns0:id>
+    <ns0:updated>1970-01-01T00:00:00.000Z</ns0:updated>
+    <ns1:quota limit="25600"
+    xmlns:ns1="http://schemas.google.com/apps/2006" />
+    <ns1:feedLink href="https://apps-apis.google.com/a/feeds/srkapps.com/nickname/2.0?username=user8306"
+    rel="http://schemas.google.com/apps/2006#user.nicknames"
+    xmlns:ns1="http://schemas.google.com/g/2005" />
+    <ns1:feedLink href="https://apps-apis.google.com/a/feeds/srkapps.com/emailList/2.0?recipient=user8306%40srkapps.com"
+    rel="http://schemas.google.com/apps/2006#user.emailLists"
+    xmlns:ns1="http://schemas.google.com/g/2005" />
+    <ns0:title type="text">user8306</ns0:title>
+    <ns0:link href="https://apps-apis.google.com/a/feeds/srkapps.com/user/2.0/user8306"
+    rel="self" type="application/atom+xml" />
+    <ns0:link href="https://apps-apis.google.com/a/feeds/srkapps.com/user/2.0/user8306"
+    rel="edit" type="application/atom+xml" />
+    <ns1:login admin="false" agreedToTerms="false"
+    changePasswordAtNextLogin="false" ipWhitelisted="false"
+    suspended="false" userName="user8306"
+    xmlns:ns1="http://schemas.google.com/apps/2006" />
+  </ns0:entry>
+  <ns0:entry>
+    <ns1:name familyName="LastName8307"
+    givenName="FirstName8307"
+    xmlns:ns1="http://schemas.google.com/apps/2006" />
+    <ns0:category scheme="http://schemas.google.com/g/2005#kind"
+    term="http://schemas.google.com/apps/2006#user" />
+    <ns0:id>
+    https://apps-apis.google.com/a/feeds/srkapps.com/user/2.0/user8307</ns0:id>
+    <ns0:updated>1970-01-01T00:00:00.000Z</ns0:updated>
+    <ns1:quota limit="25600"
+    xmlns:ns1="http://schemas.google.com/apps/2006" />
+    <ns1:feedLink href="https://apps-apis.google.com/a/feeds/srkapps.com/nickname/2.0?username=user8307"
+    rel="http://schemas.google.com/apps/2006#user.nicknames"
+    xmlns:ns1="http://schemas.google.com/g/2005" />
+    <ns1:feedLink href="https://apps-apis.google.com/a/feeds/srkapps.com/emailList/2.0?recipient=user8307%40srkapps.com"
+    rel="http://schemas.google.com/apps/2006#user.emailLists"
+    xmlns:ns1="http://schemas.google.com/g/2005" />
+    <ns0:title type="text">user8307</ns0:title>
+    <ns0:link href="https://apps-apis.google.com/a/feeds/srkapps.com/user/2.0/user8307"
+    rel="self" type="application/atom+xml" />
+    <ns0:link href="https://apps-apis.google.com/a/feeds/srkapps.com/user/2.0/user8307"
+    rel="edit" type="application/atom+xml" />
+    <ns1:login admin="false" agreedToTerms="false"
+    changePasswordAtNextLogin="false" ipWhitelisted="false"
+    suspended="false" userName="user8307"
+    xmlns:ns1="http://schemas.google.com/apps/2006" />
+  </ns0:entry>
+</ns0:feed>"""
+
+NICKNAME_ENTRY = """<?xml version='1.0' encoding='utf-8'?>
+<entry xmlns='http://www.w3.org/2005/Atom'
+xmlns:apps='http://schemas.google.com/apps/2006'>
+  <id>
+  https://apps-apis.google.com/a/feeds/srkapps.net/nickname/2.0/nehag</id>
+  <updated>1970-01-01T00:00:00.000Z</updated>
+  <category scheme='http://schemas.google.com/g/2005#kind'
+  term='http://schemas.google.com/apps/2006#nickname' />
+  <title type='text'>nehag</title>
+  <link rel='self' type='application/atom+xml'
+  href='https://apps-apis.google.com/a/feeds/srkapps.net/nickname/2.0/nehag' />
+  <link rel='edit' type='application/atom+xml'
+  href='https://apps-apis.google.com/a/feeds/srkapps.net/nickname/2.0/nehag' />
+  <apps:nickname name='nehag' />
+  <apps:login userName='neha' />
+</entry>"""
+
+
+NICKNAME_FEED = """<?xml version='1.0' encoding='utf-8'?>
+<feed xmlns='http://www.w3.org/2005/Atom'
+xmlns:openSearch='http://a9.com/-/spec/opensearchrss/1.0/'
+xmlns:apps='http://schemas.google.com/apps/2006'>
+  <id>
+  https://apps-apis.google.com/a/feeds/srkapps.net/nickname/2.0</id>
+  <updated>1970-01-01T00:00:00.000Z</updated>
+  <category scheme='http://schemas.google.com/g/2005#kind'
+  term='http://schemas.google.com/apps/2006#nickname' />
+  <title type='text'>Nicknames</title>
+  <link rel='http://schemas.google.com/g/2005#feed'
+  type='application/atom+xml'
+  href='https://apps-apis.google.com/a/feeds/srkapps.net/nickname/2.0' />
+  <link rel='http://schemas.google.com/g/2005#post'
+  type='application/atom+xml'
+  href='https://apps-apis.google.com/a/feeds/srkapps.net/nickname/2.0' />
+  <link rel='self' type='application/atom+xml'
+  href='https://apps-apis.google.com/a/feeds/srkapps.net/nickname/2.0' />
+  <openSearch:startIndex>1</openSearch:startIndex>
+  <entry>
+    <id>
+    https://apps-apis.google.com/a/feeds/srkapps.net/nickname/2.0/nehag</id>
+    <updated>1970-01-01T00:00:00.000Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind'
+    term='http://schemas.google.com/apps/2006#nickname' />
+    <title type='text'>nehag</title>
+    <link rel='self' type='application/atom+xml'
+    href='https://apps-apis.google.com/a/feeds/srkapps.net/nickname/2.0/nehag' />
+    <link rel='edit' type='application/atom+xml'
+    href='https://apps-apis.google.com/a/feeds/srkapps.net/nickname/2.0/nehag' />
+    <apps:nickname name='nehag' />
+    <apps:login userName='neha' />
+  </entry>
+  <entry>
+    <id>
+    https://apps-apis.google.com/a/feeds/srkapps.net/nickname/2.0/richag</id>
+    <updated>1970-01-01T00:00:00.000Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind'
+    term='http://schemas.google.com/apps/2006#nickname' />
+    <title type='text'>richag</title>
+    <link rel='self' type='application/atom+xml'
+    href='https://apps-apis.google.com/a/feeds/srkapps.net/nickname/2.0/richag' />
+    <link rel='edit' type='application/atom+xml'
+    href='https://apps-apis.google.com/a/feeds/srkapps.net/nickname/2.0/richag' />
+    <apps:nickname name='richag' />
+    <apps:login userName='richa' />
+  </entry>
+</feed>"""
+
+GROUP_ENTRY = """<?xml version='1.0' encoding='utf-8'?>
+<entry xmlns='http://www.w3.org/2005/Atom'
+xmlns:apps='http://schemas.google.com/apps/2006'>
+  <id>
+  http://apps-apis.google.com/a/feeds/group/2.0/srkapps.com/trial%40srkapps.com</id>
+  <updated>2011-11-10T16:54:56.784Z</updated>
+  <link rel='self' type='application/atom+xml'
+  href='http://apps-apis.google.com/a/feeds/group/2.0/srkapps.com/trial%40srkapps.com' />
+  <link rel='edit' type='application/atom+xml'
+  href='http://apps-apis.google.com/a/feeds/group/2.0/srkapps.com/trial%40srkapps.com' />
+  <apps:property name='groupId' value='trial@srkapps.com' />
+  <apps:property name='groupName' value='Trial' />
+  <apps:property name='emailPermission' value='Domain' />
+  <apps:property name='permissionPreset' value='Custom' />
+  <apps:property name='description' value='For try' />
+</entry>"""
+
+GROUP_FEED= """<?xml version='1.0' encoding='utf-8'?>
+<feed xmlns='http://www.w3.org/2005/Atom'
+xmlns:openSearch='http://a9.com/-/spec/opensearchrss/1.0/'
+xmlns:apps='http://schemas.google.com/apps/2006'>
+  <id>
+  http://apps-apis.google.com/a/feeds/group/2.0/srkapps.com</id>
+  <updated>2011-11-10T16:56:03.830Z</updated>
+  <link rel='http://schemas.google.com/g/2005#feed'
+  type='application/atom+xml'
+  href='http://apps-apis.google.com/a/feeds/group/2.0/srkapps.com' />
+  <link rel='http://schemas.google.com/g/2005#post'
+  type='application/atom+xml'
+  href='http://apps-apis.google.com/a/feeds/group/2.0/srkapps.com' />
+  <link rel='self' type='application/atom+xml'
+  href='http://apps-apis.google.com/a/feeds/group/2.0/srkapps.com' />
+  <openSearch:startIndex>1</openSearch:startIndex>
+  <entry>
+    <id>
+    http://apps-apis.google.com/a/feeds/group/2.0/srkapps.com/firstgroup%40srkapps.com</id>
+    <updated>2011-11-10T16:56:03.830Z</updated>
+    <link rel='self' type='application/atom+xml'
+    href='http://apps-apis.google.com/a/feeds/group/2.0/srkapps.com/firstgroup%40srkapps.com' />
+    <link rel='edit' type='application/atom+xml'
+    href='http://apps-apis.google.com/a/feeds/group/2.0/srkapps.com/firstgroup%40srkapps.com' />
+    <apps:property name='groupId' value='firstgroup@srkapps.com' />
+    <apps:property name='groupName' value='FirstGroup' />
+    <apps:property name='emailPermission' value='Domain' />
+    <apps:property name='permissionPreset' value='Custom' />
+    <apps:property name='description' value='First group' />
+  </entry>
+  <entry>
+    <id>
+    http://apps-apis.google.com/a/feeds/group/2.0/srkapps.com/trial%40srkapps.com</id>
+    <updated>2011-11-10T16:56:03.830Z</updated>
+    <link rel='self' type='application/atom+xml'
+    href='http://apps-apis.google.com/a/feeds/group/2.0/srkapps.com/trial%40srkapps.com' />
+    <link rel='edit' type='application/atom+xml'
+    href='http://apps-apis.google.com/a/feeds/group/2.0/srkapps.com/trial%40srkapps.com' />
+    <apps:property name='groupId' value='trial@srkapps.com' />
+    <apps:property name='groupName' value='Trial' />
+    <apps:property name='emailPermission' value='Domain' />
+    <apps:property name='permissionPreset' value='Custom' />
+    <apps:property name='description' value='For try' />
+  </entry>
+</feed>"""
+
+GROUP_MEMBER_ENTRY = """<?xml version='1.0' encoding='utf-8'?>
+<entry xmlns='http://www.w3.org/2005/Atom'
+xmlns:apps='http://schemas.google.com/apps/2006'>
+  <id>
+  http://apps-apis.google.com/a/feeds/group/2.0/srkapps.com/trial/member/abcd12310%40srkapps.com</id>
+  <updated>2011-11-10T16:58:40.804Z</updated>
+  <link rel='self' type='application/atom+xml'
+  href='http://apps-apis.google.com/a/feeds/group/2.0/srkapps.com/trial/member/abcd12310%40srkapps.com' />
+  <link rel='edit' type='application/atom+xml'
+  href='http://apps-apis.google.com/a/feeds/group/2.0/srkapps.com/trial/member/abcd12310%40srkapps.com' />
+  <apps:property name='memberType' value='User' />
+  <apps:property name='memberId' value='abcd12310@srkapps.com' />
+  <apps:property name='directMember' value='true' />
+</entry>"""
+
+GROUP_MEMBER_FEED = """<?xml version='1.0' encoding='utf-8'?>
+<feed xmlns='http://www.w3.org/2005/Atom'
+xmlns:openSearch='http://a9.com/-/spec/opensearchrss/1.0/'
+xmlns:apps='http://schemas.google.com/apps/2006'>
+  <id>
+  http://apps-apis.google.com/a/feeds/group/2.0/srkapps.com/trial/member</id>
+  <updated>2011-11-10T16:57:15.574Z</updated>
+  <link rel='http://schemas.google.com/g/2005#feed'
+  type='application/atom+xml'
+  href='http://apps-apis.google.com/a/feeds/group/2.0/srkapps.com/trial/member' />
+  <link rel='http://schemas.google.com/g/2005#post'
+  type='application/atom+xml'
+  href='http://apps-apis.google.com/a/feeds/group/2.0/srkapps.com/trial/member' />
+  <link rel='self' type='application/atom+xml'
+  href='http://apps-apis.google.com/a/feeds/group/2.0/srkapps.com/trial/member' />
+  <openSearch:startIndex>1</openSearch:startIndex>
+  <entry>
+    <id>
+    http://apps-apis.google.com/a/feeds/group/2.0/srkapps.com/trial/member/abcd12310%40srkapps.com</id>
+    <updated>2011-11-10T16:57:15.574Z</updated>
+    <link rel='self' type='application/atom+xml'
+    href='http://apps-apis.google.com/a/feeds/group/2.0/srkapps.com/trial/member/abcd12310%40srkapps.com' />
+    <link rel='edit' type='application/atom+xml'
+    href='http://apps-apis.google.com/a/feeds/group/2.0/srkapps.com/trial/member/abcd12310%40srkapps.com' />
+    <apps:property name='memberType' value='User' />
+    <apps:property name='memberId' value='abcd12310@srkapps.com' />
+    <apps:property name='directMember' value='true' />
+  </entry>
+  <entry>
+    <id>
+    http://apps-apis.google.com/a/feeds/group/2.0/srkapps.com/trial/member/neha.technocrat%40srkapps.com</id>
+    <updated>2011-11-10T16:57:15.574Z</updated>
+    <link rel='self' type='application/atom+xml'
+    href='http://apps-apis.google.com/a/feeds/group/2.0/srkapps.com/trial/member/neha.technocrat%40srkapps.com' />
+    <link rel='edit' type='application/atom+xml'
+    href='http://apps-apis.google.com/a/feeds/group/2.0/srkapps.com/trial/member/neha.technocrat%40srkapps.com' />
+    <apps:property name='memberType' value='User' />
+    <apps:property name='memberId' value='neha.technocrat@srkapps.com' />
+    <apps:property name='directMember' value='true' />
+  </entry>
+</feed>"""
+
+ORGANIZATION_UNIT_CUSTOMER_ID_ENTRY = """<?xml version='1.0' encoding='utf-8'?>
+<entry xmlns='http://www.w3.org/2005/Atom'
+xmlns:apps='http://schemas.google.com/apps/2006'>
+<id>
+https://apps-apis.google.com/a/feeds/customer/2.0/C123A456B</id>
+<updated>2011-11-21T13:17:02.274Z</updated>
+<link rel='self' type='application/atom+xml'
+href='https://apps-apis.google.com/a/feeds/customer/2.0/C123A456B' />
+<link rel='edit' type='application/atom+xml'
+href='https://apps-apis.google.com/a/feeds/customer/2.0/C123A456B' />
+<apps:property name='customerOrgUnitDescription'
+value='example.com' />
+<apps:property name='customerId' value='C123A456B' />
+<apps:property name='customerOrgUnitName' value='example.com' />
+<apps:property name='description' value='tempdescription' />
+<apps:property name='name' value='example.com' />
+</entry>"""
+
+ORGANIZATION_UNIT_ORGUNIT_ENTRY = """<?xml version='1.0' encoding='utf-8'?>
+<entry xmlns='http://www.w3.org/2005/Atom'
+xmlns:apps='http://schemas.google.com/apps/2006'>
+<id>
+https://apps-apis.google.com/a/feeds/orgunit/2.0/C123A456B/Test+Organization</id>
+<updated>2011-11-21T13:32:12.334Z</updated>
+<link rel='self' type='application/atom+xml'
+href='https://apps-apis.google.com/a/feeds/orgunit/2.0/C123A456B/Test+Organization' />
+<link rel='edit' type='application/atom+xml'
+href='https://apps-apis.google.com/a/feeds/orgunit/2.0/C123A456B/Test+Organization' />
+<apps:property name='description' value='New Test Org' />
+<apps:property name='parentOrgUnitPath' value='Test' />
+<apps:property name='name' value='Test Organization' />
+<apps:property name='orgUnitPath' value='Test/Test+Organization' />
+<apps:property name='blockInheritance' value='false' />
+</entry>"""
+
+ORGANIZATION_UNIT_ORGUNIT_FEED = """<?xml version='1.0' encoding='utf-8'?>
+<feed xmlns='http://www.w3.org/2005/Atom'
+xmlns:openSearch='http://a9.com/-/spec/opensearchrss/1.0/'
+xmlns:apps='http://schemas.google.com/apps/2006'>
+<id>https://apps-apis.google.com/a/feeds/orgunit/2.0/C123A456B</id>
+<updated>2011-11-21T13:47:12.551Z</updated>
+<link rel='http://schemas.google.com/g/2005#feed'
+type='application/atom+xml'
+href='https://apps-apis.google.com/a/feeds/orgunit/2.0/C123A456B' />
+<link rel='http://schemas.google.com/g/2005#post'
+type='application/atom+xml'
+href='https://apps-apis.google.com/a/feeds/orgunit/2.0/C123A456B' />
+<link rel='http://schemas.google.com/g/2005#batch'
+type='application/atom+xml'
+href='https://apps-apis.google.com/a/feeds/orgunit/2.0/C123A456B/batch' />
+<link rel='self' type='application/atom+xml'
+href='https://apps-apis.google.com/a/feeds/orgunit/2.0/C123A456B?get=all' />
+<openSearch:startIndex>1</openSearch:startIndex>
+<entry>
+<id>
+https://apps-apis.google.com/a/feeds/orgunit/2.0/C123A456B/testOrgUnit92</id>
+<updated>2011-11-21T13:42:45.349Z</updated>
+<link rel='self' type='application/atom+xml'
+href='https://apps-apis.google.com/a/feeds/orgunit/2.0/C123A456B/testOrgUnit92' />
+<link rel='edit' type='application/atom+xml'
+href='https://apps-apis.google.com/a/feeds/orgunit/2.0/C123A456B/testOrgUnit92' />
+<apps:property name='description' value='test92' />
+<apps:property name='parentOrgUnitPath' value='Test' />
+<apps:property name='name' value='testOrgUnit92' />
+<apps:property name='orgUnitPath' value='Test/testOrgUnit92' />
+<apps:property name='blockInheritance' value='false' />
+</entry>
+<entry>
+<id>
+https://apps-apis.google.com/a/feeds/orgunit/2.0/C123A456B/testOrgUnit93</id>
+<updated>2011-11-21T13:42:45.349Z</updated>
+<link rel='self' type='application/atom+xml'
+href='https://apps-apis.google.com/a/feeds/orgunit/2.0/C123A456B/testOrgUnit93' />
+<link rel='edit' type='application/atom+xml'
+href='https://apps-apis.google.com/a/feeds/orgunit/2.0/C123A456B/testOrgUnit93' />
+<apps:property name='description' value='test93' />
+<apps:property name='parentOrgUnitPath' value='Test' />
+<apps:property name='name' value='testOrgUnit93' />
+<apps:property name='orgUnitPath' value='Test/testOrgUnit93' />
+<apps:property name='blockInheritance' value='false' />
+</entry>
+</feed>"""
+
+
+ORGANIZATION_UNIT_ORGUSER_ENTRY = """<?xml version='1.0' encoding='utf-8'?>
+<entry xmlns='http://www.w3.org/2005/Atom'
+xmlns:apps='http://schemas.google.com/apps/2006'>
+<id>
+https://apps-apis.google.com/a/feeds/orguser/2.0/C123A456B/admin%40example.com</id>
+<updated>2011-11-21T14:05:17.734Z</updated>
+<link rel='self' type='application/atom+xml'
+href='https://apps-apis.google.com/a/feeds/orguser/2.0/C123A456B/admin%40example.com' />
+<link rel='edit' type='application/atom+xml'
+href='https://apps-apis.google.com/a/feeds/orguser/2.0/C123A456B/admin%40example.com' />
+<apps:property name='orgUserEmail' value='admin@example.com' />
+<apps:property name='orgUnitPath' value='Test' />
+</entry>"""
+
+ORGANIZATION_UNIT_ORGUSER_FEED = """<?xml version='1.0' encoding='utf-8'?>
+<feed xmlns='http://www.w3.org/2005/Atom'
+xmlns:openSearch='http://a9.com/-/spec/opensearchrss/1.0/'
+xmlns:apps='http://schemas.google.com/apps/2006'>
+<id>https://apps-apis.google.com/a/feeds/orguser/2.0/C123A456B</id>
+<updated>2011-11-21T14:10:48.206Z</updated>
+<link rel='http://schemas.google.com/g/2005#feed'
+type='application/atom+xml'
+href='https://apps-apis.google.com/a/feeds/orguser/2.0/C123A456B' />
+<link rel='http://schemas.google.com/g/2005#post'
+type='application/atom+xml'
+href='https://apps-apis.google.com/a/feeds/orguser/2.0/C123A456B' />
+<link rel='http://schemas.google.com/g/2005#batch'
+type='application/atom+xml'
+href='https://apps-apis.google.com/a/feeds/orguser/2.0/C123A456B/batch' />
+<link rel='self' type='application/atom+xml'
+href='https://apps-apis.google.com/a/feeds/orguser/2.0/C123A456B?get=all' />
+<openSearch:startIndex>1</openSearch:startIndex>
+<entry>
+<id>
+https://apps-apis.google.com/a/feeds/orguser/2.0/C123A456B/user720430%40example.com</id>
+<updated>2011-11-21T14:09:16.600Z</updated>
+<link rel='self' type='application/atom+xml'
+href='https://apps-apis.google.com/a/feeds/orguser/2.0/C123A456B/user720430%40example.com' />
+<link rel='edit' type='application/atom+xml'
+href='https://apps-apis.google.com/a/feeds/orguser/2.0/C123A456B/user720430%40example.com' />
+<apps:property name='orgUserEmail'
+value='user720430@example.com' />
+<apps:property name='orgUnitPath' value='Test' />
+</entry>
+<entry>
+<id>
+https://apps-apis.google.com/a/feeds/orguser/2.0/C123A456B/user832648%40example.com</id>
+<updated>2011-11-21T14:09:16.600Z</updated>
+<link rel='self' type='application/atom+xml'
+href='https://apps-apis.google.com/a/feeds/orguser/2.0/C123A456B/user832648%40example.com' />
+<link rel='edit' type='application/atom+xml'
+href='https://apps-apis.google.com/a/feeds/orguser/2.0/C123A456B/user832648%40example.com' />
+<apps:property name='orgUserEmail'
+value='user832648@example.com' />
+<apps:property name='orgUnitPath' value='Test' />
+</entry>
+</feed>"""

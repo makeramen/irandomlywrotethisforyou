@@ -35,6 +35,12 @@ class AclRole(atom.core.XmlElement):
   value = 'value'
 
 
+class AclAdditionalRole(atom.core.XmlElement):
+  """Describes an additionalRole element."""
+  _qname = GACL_TEMPLATE % 'additionalRole'
+  value = 'value'
+
+
 class AclScope(atom.core.XmlElement):
   """Describes the scope of an entry in an access control list."""
   _qname = GACL_TEMPLATE % 'scope'
@@ -42,14 +48,22 @@ class AclScope(atom.core.XmlElement):
   value = 'value'
 
 
+class AclWithKey(atom.core.XmlElement):
+  """Describes a key that can be used to access a document."""
+  _qname = GACL_TEMPLATE % 'withKey'
+  key = 'key'
+  role = AclRole
+  additional_role = AclAdditionalRole
+
+
 class AclEntry(gdata.data.GDEntry):
   """Describes an entry in a feed of an access control list (ACL)."""
   scope = AclScope
   role = AclRole
+  with_key = AclWithKey
+  additional_role = AclAdditionalRole
 
 
 class AclFeed(gdata.data.GDFeed):
   """Describes a feed of an access control list (ACL)."""
   entry = [AclEntry]
-
-
