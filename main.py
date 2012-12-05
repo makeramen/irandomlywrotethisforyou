@@ -50,8 +50,6 @@ bri_urls = (
     "http://www.iwrotethisforyou.me/2008/10/never-ending-search-for-something-real.html",
     "http://www.iwrotethisforyou.me/2009/10/absence-of-oxygen.html",
     "http://www.iwrotethisforyou.me/2008/08/station.html",
-    "http://www.iwrotethisforyou.me/2007/09/missing.html",
-    "http://www.iwrotethisforyou.me/2007/10/frustration.html",
     "http://www.iwrotethisforyou.me/2010/05/untouchable-city.html",
     "http://www.iwrotethisforyou.me/2009/11/heart-rides-on.html",
     "http://www.iwrotethisforyou.me/2007/10/frustration.html",
@@ -65,7 +63,6 @@ bri_urls = (
     "http://www.iwrotethisforyou.me/2012/07/the-purpose-of-love.html",
     "http://www.iwrotethisforyou.me/2012/06/endless-night-and-all-it-promises.html",
     "http://www.iwrotethisforyou.me/2012/05/defiance-of-different.html",
-    "http://www.iwrotethisforyou.me/2012/04/hidden-depths.html",
     "http://www.iwrotethisforyou.me/2012/02/relative-phenomena.html",
     )
 
