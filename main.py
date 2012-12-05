@@ -192,20 +192,23 @@ class StayPageHandler(webapp2.RequestHandler):
                 entries = memcache.get("bri_entries")
             else:
                 entries = memcache.get("entries")
-
-            if entries is None:
-                logging.info('cache miss')
-                entries = get_cached_entries()
-                memcache.set("entries", entries, 43200)
-                bri_entries = tuple(e for e in entries if e['url'] in bri_urls)
-                memcache.set("bri_entries", bri_entries, 43200)
+            if not entries:
+                if bri and memcache.get("entries"):
+                    entries = memcache.get('entries')
+                    memcache.set("bri_entries", [e for e in entries if e['url'] in bri_urls], 43200)
+                    entries = memcache.get('bri_entries')
+                    logging.info('reset bri')
+                else:
+                    logging.info('cache miss')
+                    entries = get_cached_entries()
+                    memcache.set("entries", entries, 43200)
+                    memcache.set("bri_entries", [e for e in entries if e['url'] in bri_urls], 43200)
             elif len(entries[0]) != 5: # check for 5 elements per entry
                 logging.info('flushing memcache')
                 memcache.flush_all()
                 entries = get_cached_entries()
                 memcache.add("entries", entries, 43200)
-                bri_entries = tuple(e for e in entries if e['url'] in bri_urls)
-                memcache.set("bri_entries", bri_entries, 43200)
+                memcache.set("bri_entries", [e for e in entries if e['url'] in bri_urls], 43200)
             else:
                 logging.info('cache hit')
 
@@ -217,6 +220,12 @@ class StayPageHandler(webapp2.RequestHandler):
             num = random.randint(0,len(entries)-1)
             logging.info("num: %s" % num)
             entry = entries[num]
+
+            if bri:
+                entry = entries.pop(num)
+                memcache.set("bri_entries", entries)
+            else:
+                entry = entries[num]
             # entry = entries[0]
             # entry = entries[-472]
             # entry = entries[-165]
