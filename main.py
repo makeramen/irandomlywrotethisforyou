@@ -33,7 +33,6 @@ dbln_re = re.compile(r'\n{3,}')
 bri_urls = (
     "http://www.iwrotethisforyou.me/2007/07/first-sip.html",
     "http://www.iwrotethisforyou.me/2007/08/fur.html",
-    "http://www.iwrotethisforyou.me/2007/08/hidden.html",
     "http://www.iwrotethisforyou.me/2007/08/iris.html",
     "http://www.iwrotethisforyou.me/2007/09/building.html",
     "http://www.iwrotethisforyou.me/2007/09/defiance.html",
@@ -54,7 +53,6 @@ bri_urls = (
     "http://www.iwrotethisforyou.me/2007/11/sea.html",
     "http://www.iwrotethisforyou.me/2007/11/smiling.html",
     "http://www.iwrotethisforyou.me/2007/11/where.html",
-    "http://www.iwrotethisforyou.me/2007/12/many.html",
     "http://www.iwrotethisforyou.me/2007/12/meeting.html",
     "http://www.iwrotethisforyou.me/2007/12/sleep.html",
     "http://www.iwrotethisforyou.me/2007/12/watching.html",
@@ -125,7 +123,6 @@ bri_urls = (
     "http://www.iwrotethisforyou.me/2011/08/sound-of-sea.html",
     "http://www.iwrotethisforyou.me/2012/02/relative-phenomena.html",
     "http://www.iwrotethisforyou.me/2012/02/stuff-and-things.html",
-    "http://www.iwrotethisforyou.me/2012/05/defiance-of-different.html",
     "http://www.iwrotethisforyou.me/2012/06/endless-night-and-all-it-promises.html",
     "http://www.iwrotethisforyou.me/2012/06/grand-distraction.html",
     "http://www.iwrotethisforyou.me/2012/07/the-purpose-of-love.html",
