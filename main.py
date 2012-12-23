@@ -134,9 +134,9 @@ bri_urls = (
     "http://www.iwrotethisforyou.me/2012/10/the-night-holds-day-so-softly.html",
     "http://www.iwrotethisforyou.me/2012/10/the-sun-leaves-earth.html",
     "http://www.iwrotethisforyou.me/2012/12/the-nature-of-river-is-to-run.html",
-    )
+    # )
 
-miss_urls = (
+# miss_urls = (
     "http://www.iwrotethisforyou.me/2007/09/distance.html",
     "http://www.iwrotethisforyou.me/2007/09/timing.html",
     "http://www.iwrotethisforyou.me/2007/10/alone.html",
@@ -153,8 +153,6 @@ miss_urls = (
     "http://www.iwrotethisforyou.me/2011/08/negative-space.html",
     "http://www.iwrotethisforyou.me/2011/12/forest-of-stars.html",
     )
-
-bri_urls = bri_urls.extend(miss_urls)
 
 def get_hrefs():
     blogger_service = service.GDataService()
