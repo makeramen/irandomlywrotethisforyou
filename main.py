@@ -29,6 +29,7 @@ br_re = re.compile(r'<br *?/?>')
 p_re = re.compile(r'</?(?:p|div).*?>')
 n_re = re.compile(r'\n')
 dbln_re = re.compile(r'\n{3,}')
+end_trim_re = re.compile(r'__+.*')
 
 bri_urls = (
     "http://www.iwrotethisforyou.me/2007/07/first-sip.html",
@@ -247,6 +248,7 @@ def format_entry(entry):
     content = content.strip()
     content = dbln_re.sub(r'\n\n', content)
     content = n_re.sub(r'<br />', content)
+    content = end_trim_re.sub(r'', content)
 
     date = datetime.datetime.strptime(entry.published.text[:10], "%Y-%m-%d").strftime("%A, %B %d, %Y")
     url = entry.link[-1].href
