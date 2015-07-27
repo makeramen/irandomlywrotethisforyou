@@ -42,7 +42,6 @@ bri_urls = (
     "http://www.iwrotethisforyou.me/2007/09/salt.html",
     "http://www.iwrotethisforyou.me/2007/09/warmth.html",
     "http://www.iwrotethisforyou.me/2007/10/following.html",
-    "http://www.iwrotethisforyou.me/2007/10/frustration.html",
     "http://www.iwrotethisforyou.me/2007/10/importance.html",
     "http://www.iwrotethisforyou.me/2007/10/jewels.html",
     "http://www.iwrotethisforyou.me/2007/10/sweet.html",
@@ -76,12 +75,10 @@ bri_urls = (
     "http://www.iwrotethisforyou.me/2008/10/shatter-proof.html",
     "http://www.iwrotethisforyou.me/2008/10/walking-away.html",
     "http://www.iwrotethisforyou.me/2008/11/tired-advice.html",
-    "http://www.iwrotethisforyou.me/2008/12/scars-you-love.html",
     "http://www.iwrotethisforyou.me/2008/12/water.html",
     "http://www.iwrotethisforyou.me/2009/01/pressure-to-wounded.html",
     "http://www.iwrotethisforyou.me/2009/01/things-ive-never-seen-or-heard.html",
     "http://www.iwrotethisforyou.me/2009/01/world-loves-you-too.html",
-    "http://www.iwrotethisforyou.me/2009/02/last-stop.html",
     "http://www.iwrotethisforyou.me/2009/02/light-we-fly-to.html",
     "http://www.iwrotethisforyou.me/2009/02/time-we-could-spend.html",
     "http://www.iwrotethisforyou.me/2009/03/heart-beats-per-minute.html",
@@ -129,18 +126,33 @@ bri_urls = (
     "http://www.iwrotethisforyou.me/2010/09/world-of-one.html",
     "http://www.iwrotethisforyou.me/2010/11/new-singularity.html",
     "http://www.iwrotethisforyou.me/2011/03/superstition-and-fear.html",
-    "http://www.iwrotethisforyou.me/2011/03/water-is-on-fire.html",
     "http://www.iwrotethisforyou.me/2011/08/sound-of-sea.html",
     "http://www.iwrotethisforyou.me/2012/02/relative-phenomena.html",
+    "http://www.iwrotethisforyou.me/2012/03/broken-ice-in-your-wake.html",
     "http://www.iwrotethisforyou.me/2012/02/stuff-and-things.html",
+    "http://www.iwrotethisforyou.me/2012/04/hidden-depths.html",
+    "http://www.iwrotethisforyou.me/2012/04/envy-of-billion-little-unique.html",
+    "http://www.iwrotethisforyou.me/2012/05/remaining-of-me.html",
     "http://www.iwrotethisforyou.me/2012/06/endless-night-and-all-it-promises.html",
     "http://www.iwrotethisforyou.me/2012/06/grand-distraction.html",
     "http://www.iwrotethisforyou.me/2012/07/the-purpose-of-love.html",
+    "http://www.iwrotethisforyou.me/2012/07/desire-to-live-underwater-forever.html",
     "http://www.iwrotethisforyou.me/2012/08/the-last-land-i-stood-on.html",
     "http://www.iwrotethisforyou.me/2012/10/the-language-stripped-naked.html",
     "http://www.iwrotethisforyou.me/2012/10/the-night-holds-day-so-softly.html",
     "http://www.iwrotethisforyou.me/2012/10/the-sun-leaves-earth.html",
     "http://www.iwrotethisforyou.me/2012/12/the-nature-of-river-is-to-run.html",
+    "http://www.iwrotethisforyou.me/2012/12/the-nature-of-river-is-to-run.html",
+    "http://www.iwrotethisforyou.me/2014/02/the-hands-you-gave-me.html",
+    "http://www.iwrotethisforyou.me/2014/06/the-dreams-on-line.html",
+    "http://www.iwrotethisforyou.me/2014/07/the-city-that-sleeps-where-they-fell.html",
+    "http://www.iwrotethisforyou.me/2014/08/the-best-i-could-with-what-i-had-in.html",
+    "http://www.iwrotethisforyou.me/2014/08/the-world-is-not-as-dark-as-it-seems.html",
+    "http://www.iwrotethisforyou.me/2014/09/the-sky-warps-sun.html",
+    "http://www.iwrotethisforyou.me/2014/09/the-things-i-make-when-im-alone.html",
+    "http://www.iwrotethisforyou.me/2014/11/the-twin-engines.html",
+    "http://www.iwrotethisforyou.me/2014/12/the-splinter-of-light.html",
+    "http://www.iwrotethisforyou.me/2015/04/the-fire-is-where-were-all-born.html",
     # )
 
 # miss_urls = (
@@ -160,6 +172,8 @@ bri_urls = (
     "http://www.iwrotethisforyou.me/2010/05/theory-is-still-just-theory.html",
     "http://www.iwrotethisforyou.me/2011/08/negative-space.html",
     "http://www.iwrotethisforyou.me/2011/12/forest-of-stars.html",
+    "http://www.iwrotethisforyou.me/2014/10/the-world-of-your-own.html",
+    "http://www.iwrotethisforyou.me/2015/01/the-truth-is-its-just-something-to-hold.html",
     )
 
 def get_hrefs():
@@ -170,7 +184,7 @@ def get_hrefs():
     query = service.Query()
     query.feed = '/feeds/6752139154038265086/posts/default'
     query.max_results = 500
-            
+
     allhrefs = []
     i = 0
     while 1:
@@ -178,12 +192,12 @@ def get_hrefs():
         feed = blogger_service.Get(query.ToUri())
         logging.info('%d urls fetched, fetch number %d' % (len(feed.entry), i + 1))
         allhrefs.extend(entry.link[-1].href for entry in feed.entry)
-        
+
         if len(feed.entry) == 500:
             i += 1
         else:
             break
-    
+
     logging.info('retrieved %d urls total' % len(allhrefs))
     return allhrefs
 
@@ -195,7 +209,7 @@ def get_cached_entries():
     query = service.Query()
     query.feed = '/feeds/6752139154038265086/posts/default'
     query.max_results = 500
-    
+
     bri_entries = []
     entries = []
     i = 0
@@ -204,24 +218,24 @@ def get_cached_entries():
         feed = blogger_service.Get(query.ToUri())
         logging.info('%d entries fetched, fetch number %d' % (len(feed.entry), i + 1))
         entries.extend(feed.entry)
-        
+
         if len(feed.entry) == 500:
             i += 1
         else:
             break
-    
+
     logging.info('retrieved %d entries total' % len(entries))
-    
+
     cachedentries = tuple(format_entry(e) for e in entries)
-    
+
     return cachedentries
 
 def format_entry(entry):
-    
+
     title = unicode(entry.title.text, 'utf-8')
-    
+
     content = unicode(entry.content.text, 'utf-8')
-    
+
     imgurl = imgurl_re.findall(content)
 
     content = xml_style_re.sub(r'', content)
@@ -255,7 +269,7 @@ class RedirectHandler(webapp2.RequestHandler):
                 memcache.set("allhrefs", allhrefs, 43200)
             else:
                 logging.info('cache hit')
-        
+
             self.redirect(allhrefs[random.randint(0,len(allhrefs) - 1)])
         except Exception as e:
             logging.warning('error, redirecting to self: %s' % e)
@@ -293,7 +307,7 @@ class StayPageHandler(webapp2.RequestHandler):
                 entries = memcache.get("bri_entries")
             else:
                 entries = memcache.get("entries")
-    
+
             num = random.randint(0,len(entries)-1)
             logging.info("num: %s" % num)
             entry = entries[num]
@@ -306,11 +320,11 @@ class StayPageHandler(webapp2.RequestHandler):
             # entry = entries[0]
             # entry = entries[-472]
             # entry = entries[-165]
-    
+
             template_values = { 'entry' : entry, }
-    
+
             template = jinja_environment.get_template('stay.html')
-            
+
             self.response.out.write(template.render(template_values))
         except Exception as e:
             logging.exception(e)
@@ -319,7 +333,7 @@ class StayPageHandler(webapp2.RequestHandler):
                 return self.redirect('/bri')
             else:
                 return self.redirect('/stay')
-            
+
 
 app = webapp2.WSGIApplication([
     ('/stay/?', StayPageHandler),
