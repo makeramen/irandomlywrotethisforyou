@@ -27,6 +27,7 @@ import atom.http_core
 import gdata.data
 
 
+ATOM_NAMESPACE = 'http://www.w3.org/2005/Atom'
 GD_NAMESPACE = 'http://schemas.google.com/g/2005'
 GD_NAMESPACE_TEMPLATE = '{http://schemas.google.com/g/2005}%s'
 SC_NAMESPACE_TEMPLATE = ('{http://schemas.google.com/'
@@ -126,6 +127,7 @@ class Group(atom.core.XmlElement):
   custom elements groups.
   """
   _qname = SC_NAMESPACE_TEMPLATE % 'group'
+  name = 'name'
   attribute = [Attribute]
 
 
@@ -168,6 +170,19 @@ class ExcludedDestination(atom.core.XmlElement):
   """
   _qname = SC_NAMESPACE_TEMPLATE % 'excluded_destination'
   dest = 'dest'
+
+
+class Status(atom.core.XmlElement):
+  """sc:status element
+
+  This element defines the status of an element in a particular destination. It
+  has a destination and an actual status such as enlisted, review, or
+  disapproved.
+  """
+  _qname = SC_NAMESPACE_TEMPLATE % 'status'
+  dest = 'dest'
+  status = 'status'
+
 
 # Warning Attributes (to be used with app:control element)
 
@@ -236,6 +251,7 @@ class Datapoint(atom.core.XmlElement):
   _qname = SC_NAMESPACE_TEMPLATE % 'datapoint'
   clicks = 'clicks'
   date = 'date'
+  paid_clicks = 'paid_clicks'
 
 
 class Performance(atom.core.XmlElement):
@@ -257,6 +273,7 @@ class ProductControl(atom.data.Control):
   required_destination = [RequiredDestination]
   validate_destination = [ValidateDestination]
   excluded_destination = [ExcludedDestination]
+  status = [Status]
   warnings = Warnings
 
 # Content API for Shopping, product (scp) attributes
@@ -590,6 +607,49 @@ class Year(atom.core.XmlElement):
   The year the product was produced. Expects four digits
   """
   _qname = SCP_NAMESPACE_TEMPLATE % 'year'
+
+
+class IdentifierExists(atom.core.XmlElement):
+  """scp:identifier_exists element
+
+  Specify as true if the item has no manufacturer part number or
+  any other industry standard product identifier.
+  """
+  _qname = SCP_NAMESPACE_TEMPLATE % 'identifier_exists'
+
+
+class UnitPricingMeasure(atom.core.XmlElement):
+  """scp:unit_pricing_measure element
+
+  The dimension by which the item is sold.
+  """
+  _qname = SCP_NAMESPACE_TEMPLATE % 'unit_pricing_measure'
+  unit = 'unit'
+
+
+class UnitPricingBaseMeasure(atom.core.XmlElement):
+  """scp:unit_pricing_base_measure element
+
+  Your preference of the denominator of the unit price.
+  """
+  _qname = SCP_NAMESPACE_TEMPLATE % 'unit_pricing_base_measure'
+  unit = 'unit'
+
+
+class EnergyEfficiencyClass(atom.core.XmlElement):
+  """scp:energy_efficiency_class element
+
+  The item's energy efficiency class.
+  """
+  _qname = SCP_NAMESPACE_TEMPLATE % 'energy_efficiency_class'
+
+
+class Multipack(atom.core.XmlElement):
+  """scp:ultipack element
+
+  The number of products in a merchant-defined custom multipack
+  """
+  _qname = SCP_NAMESPACE_TEMPLATE % 'multipack'
 
 
 class ProductEntry(gdata.data.BatchEntry):
@@ -1009,6 +1069,11 @@ class ProductEntry(gdata.data.BatchEntry):
   target_country = TargetCountry
   tax = [Tax]
   year = Year
+  identifier_exists = IdentifierExists
+  unit_pricing_measure = UnitPricingMeasure
+  unit_pricing_base_measure = UnitPricingBaseMeasure
+  energy_efficiency_class = EnergyEfficiencyClass
+  multipack = Multipack
 
   def get_batch_errors(self):
     """Attempts to parse errors from atom:content element.
@@ -1093,7 +1158,20 @@ class ContentForShoppingError(atom.core.XmlElement):
   code = ErrorCode
   location = ErrorLocation
   internal_reason = InternalReason
-  id = atom.data.Id
+
+  @property
+  def id(self):
+    """Id for error element.
+
+    The namespace for the id element is different in batch requests than in
+    individual requests, so we need to consider either case.
+    """
+    for element in self.GetElements():
+      if element.tag == 'id':
+        if element.namespace in (GD_NAMESPACE, ATOM_NAMESPACE):
+          return element.text
+
+    return None
 
 
 class ContentForShoppingErrors(atom.core.XmlElement):
@@ -1192,8 +1270,7 @@ class ProcessingStatus(atom.core.XmlElement):
 
 
 class DatafeedEntry(gdata.data.GDEntry):
-  """An entry for a Datafeed
-  """
+  """An entry for a Datafeed."""
   content_language = ContentLanguage
   target_country = TargetCountry
   feed_file_name = FeedFileName
@@ -1205,9 +1282,11 @@ class DatafeedEntry(gdata.data.GDEntry):
 
 
 class DatafeedFeed(gdata.data.GDFeed):
-  """A datafeed feed
-  """
+  """A datafeed feed."""
   entry = [DatafeedEntry]
+  total_results = TotalResults
+  items_per_page = ItemsPerPage
+  start_index = StartIndex
 
 
 class AdultContent(atom.core.XmlElement):
@@ -1228,15 +1307,238 @@ class ReviewsUrl(atom.core.XmlElement):
   _qname = SC_NAMESPACE_TEMPLATE % 'reviews_url'
 
 
-class ClientAccount(gdata.data.GDEntry):
-  """A multiclient account entry
+class AdwordsAccount(atom.core.XmlElement):
+  """sc:adwords_account element"""
+  _qname = SC_NAMESPACE_TEMPLATE % 'adwords_account'
+  status = 'status'
+
+
+class AdwordsAccounts(atom.core.XmlElement):
+  """sc:adwords_accounts element
+
+  Container element for adwords accounts settings.
   """
+  _qname = SC_NAMESPACE_TEMPLATE % 'adwords_accounts'
+  adwords_account = [AdwordsAccount]
+
+
+class ClientAccount(gdata.data.GDEntry):
+  """A multiclient account entry."""
   adult_content = AdultContent
   internal_id = InternalId
   reviews_url = ReviewsUrl
+  adwords_accounts = AdwordsAccounts
 
 
 class ClientAccountFeed(gdata.data.GDFeed):
-  """A multiclient account feed
-  """
+  """A multiclient account feed."""
   entry = [ClientAccount]
+  total_results = TotalResults
+  items_per_page = ItemsPerPage
+  start_index = StartIndex
+
+
+# Users Feed Classes
+class Admin(atom.core.XmlElement):
+  """sc:admin element"""
+  _qname = SC_NAMESPACE_TEMPLATE % 'admin'
+
+
+class Permission(atom.core.XmlElement):
+  """sc:permission element"""
+  _qname = SC_NAMESPACE_TEMPLATE % 'permission'
+  scope = 'scope'
+
+
+class UsersEntry(gdata.data.GDEntry):
+  """A User Management Feed entry."""
+  admin = Admin
+  permission = [Permission]
+
+
+class UsersFeed(gdata.data.GDFeed):
+  """A User Management Feed."""
+  entry = [UsersEntry]
+  total_results = TotalResults
+  items_per_page = ItemsPerPage
+  start_index = StartIndex
+
+
+# Data Quality Feed Classes
+class ExampleItemLink(atom.core.XmlElement):
+  """sc:link element"""
+  _qname = SC_NAMESPACE_TEMPLATE % 'link'
+
+
+class ExampleItemTitle(atom.core.XmlElement):
+  """sc:title element"""
+  _qname = SC_NAMESPACE_TEMPLATE % 'title'
+
+
+class ItemId(atom.core.XmlElement):
+  """sc:item_id element"""
+  _qname = SC_NAMESPACE_TEMPLATE % 'item_id'
+
+
+class SubmittedValue(atom.core.XmlElement):
+  """sc:submitted_value element"""
+  _qname = SC_NAMESPACE_TEMPLATE % 'submitted_value'
+
+
+class ValueOnLandingPage(atom.core.XmlElement):
+  """sc:value_on_landing_page element"""
+  _qname = SC_NAMESPACE_TEMPLATE % 'value_on_landing_page'
+
+
+class ExampleItem(atom.core.XmlElement):
+  """sc:example_item element"""
+  _qname = SC_NAMESPACE_TEMPLATE % 'example_item'
+  item_id = ItemId
+  link = ExampleItemLink
+  title = ExampleItemTitle
+  submitted_value = SubmittedValue
+  value_on_landing_page = ValueOnLandingPage
+
+
+class Issue(atom.core.XmlElement):
+  """sc:issue element"""
+  _qname = SC_NAMESPACE_TEMPLATE % 'issue'
+  id = 'id'
+  last_checked = 'last_checked'
+  num_items = 'num_items'
+  offending_term = 'offending_term'
+  example_item = [ExampleItem]
+
+
+class IssueGroup(atom.core.XmlElement):
+  """sc:issue_group element"""
+  _qname = SC_NAMESPACE_TEMPLATE % 'issue_group'
+  issue = [Issue]
+  country = 'country'
+  id = 'id'
+
+
+class IssueGroups(atom.core.XmlElement):
+  """sc:issue_groups element"""
+  _qname = SC_NAMESPACE_TEMPLATE % 'issue_groups'
+  issue_group = [IssueGroup]
+
+
+class DataQualityEntry(gdata.data.GDEntry):
+  """A Data Quality Feed entry."""
+  issue_groups = IssueGroups
+
+
+class DataQualityFeed(gdata.data.GDFeed):
+  """A Data Quality Feed."""
+  entry = [DataQualityEntry]
+  total_results = TotalResults
+  items_per_page = ItemsPerPage
+  start_index = StartIndex
+
+
+# Local Products Feed Classes
+class SalePrice(atom.core.XmlElement):
+  """scp:sale_price element
+
+  The sale price of the product. The unit attribute must be set, and should
+  represent the currency.
+  """
+  _qname = SCP_NAMESPACE_TEMPLATE % 'sale_price'
+  unit = 'unit'
+
+
+class SalePriceEffectiveDate(atom.core.XmlElement):
+  """scp:sale_price_effective_date element
+
+  The effective date of the sale price of the product.
+  """
+  _qname = SCP_NAMESPACE_TEMPLATE % 'sale_price_effective_date'
+
+
+class InventoryEntry(gdata.data.BatchEntry):
+  """Product entry containing local product information.
+
+  The elements of this entry that are used are made up of five different
+  namespaces. They are:
+
+  atom: - Atom
+  app: - Atom Publishing Protocol
+  gd: - Google Data API
+  sc: - Content API for Shopping, general attributes
+  scp: - Content API for Shopping, product attributes
+
+  Only the sc and scp namespace elements are defined here, but additional useful
+  elements are defined in superclasses.
+
+  To remove the value of an attribute of a local product, set the value of the
+  attribute to the empty string. For example:
+
+      entry.availability = Availability('')
+
+  The following attributes are encoded as XML elements in the Atom (atom:)
+  namespace: title, link, entry, id, category, content, author, created
+  updated. Among these, the title, content and link tags are part of the
+  required Content for Shopping API so we document them here.
+
+  .. attribute:: availability
+
+    The avilability of a local product.
+
+    This should be an :class:`Availability` instance, for example::
+
+      entry = InventoryEntry()
+      entry.availability = Availability('in stock')
+
+  .. attribute:: price
+
+    The price for this local product.
+
+    This should be a :class:`Price` element, including a unit argument to
+    indicate the currency, for example::
+
+      entry = InventoryEntry()
+      entry.price = Price('20.00', unit='USD')
+
+  .. attribute:: quantity
+
+    The quantity of local product available in stock.
+
+    This should be a :class:`Quantity` element, for example::
+
+      entry = InventoryEntry()
+      entry.quantity = Quantity('100')
+
+  .. attribute:: sale_price
+
+    The sale price for this local product.
+
+    This should be a :class:`SalePrice` element, including a unit argument to
+    indicate the currency, for example::
+
+      entry = InventoryEntry()
+      entry.sale_price = SalePrice('20.00', unit='USD')
+
+  .. attribute:: sale_price_effective_date
+
+    The effective data of the sale price for this local product.
+
+    This should be a :class:`SalePriceEffectiveDate` element, for example::
+
+      entry = InventoryEntry()
+      entry.sale_price_effective_date = SalePriceEffectiveDate(
+          '2012-01-09 2012-01-13')
+  """
+  availability = Availability
+  price = Price
+  quantity = Quantity
+  sale_price = SalePrice
+  sale_price_effective_date = SalePriceEffectiveDate
+
+
+class InventoryFeed(gdata.data.BatchFeed):
+  """Represents a feed of a merchant's local products."""
+  entry = [InventoryEntry]
+  total_results = TotalResults
+  items_per_page = ItemsPerPage
+  start_index = StartIndex
