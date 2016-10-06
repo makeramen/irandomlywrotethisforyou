@@ -154,6 +154,16 @@ bri_urls = (
     "http://www.iwrotethisforyou.me/2014/11/the-twin-engines.html",
     "http://www.iwrotethisforyou.me/2014/12/the-splinter-of-light.html",
     "http://www.iwrotethisforyou.me/2015/04/the-fire-is-where-were-all-born.html",
+    "http://www.iwrotethisforyou.me/2015/06/the-saying-of-when.html",
+    "http://www.iwrotethisforyou.me/2015/08/the-box-of-songs.html",
+    "http://www.iwrotethisforyou.me/2015/08/the-landscapes-of-you.html",
+    "http://www.iwrotethisforyou.me/2015/08/the-uncontrollable.html",
+    "http://www.iwrotethisforyou.me/2015/09/the-murder-of-clock.html",
+    "http://www.iwrotethisforyou.me/2016/01/the-slow-gentle-continental-drift.html",
+    "http://www.iwrotethisforyou.me/2016/02/the-failure-of-prayer.html",
+    "http://www.iwrotethisforyou.me/2016/03/the-spider-silk.html",
+    "http://www.iwrotethisforyou.me/2016/04/the-terrible-inadequacy-of-entire-life.html",
+    "http://www.iwrotethisforyou.me/2016/09/the-remaining-you.html",
     # )
 
 # miss_urls = (
@@ -175,6 +185,7 @@ bri_urls = (
     "http://www.iwrotethisforyou.me/2011/12/forest-of-stars.html",
     "http://www.iwrotethisforyou.me/2014/10/the-world-of-your-own.html",
     "http://www.iwrotethisforyou.me/2015/01/the-truth-is-its-just-something-to-hold.html",
+    "http://www.iwrotethisforyou.me/2016/05/the-rain-of-black-umbrellas.html",
     )
 
 def get_hrefs():
