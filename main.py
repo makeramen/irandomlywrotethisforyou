@@ -164,6 +164,9 @@ bri_urls = (
     "http://www.iwrotethisforyou.me/2016/03/the-spider-silk.html",
     "http://www.iwrotethisforyou.me/2016/04/the-terrible-inadequacy-of-entire-life.html",
     "http://www.iwrotethisforyou.me/2016/09/the-remaining-you.html",
+    "http://www.iwrotethisforyou.me/2016/10/the-anchors-i-found-in-others.html",
+    "http://www.iwrotethisforyou.me/2016/11/the-hard-way.html",
+    "http://www.iwrotethisforyou.me/2016/11/the-light-of-all-stars.html",
     # )
 
 # miss_urls = (
