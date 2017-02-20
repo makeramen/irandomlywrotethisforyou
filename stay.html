@@ -4,21 +4,25 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 	<head>
-		<meta name="viewport" content="width=320">
 		<meta name="theme-color" content="#000000">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 		<title>I [Randomly] Wrote This For You</title>
-		<link type="text/css" rel="stylesheet" href="/stylesheets/style.css" />
+
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+		<link type="text/css" rel="stylesheet" href="/stylesheets/style2.css" />
 	</head>
 
 	<body>
-		<div id="wrapper">
+		<div id="wrapper" class="container-fluid">
 			<h2>{{ entry.date }}</h2>
 			<a href="{{ entry.url }}" target="_blank">
 				<h1>{{ entry.title }}</h1>
 			</a>
 			{% if entry.imgurl %}
 			<a href="{{ entry.url }}" target="_blank">
-				<img src="{{ entry.imgurl.0 }}" />
+				<img id="image" class="img-responsive" src="{{ entry.imgurl.0 }}" />
 			</a>
 			{% endif %}
 			<div id="content">
