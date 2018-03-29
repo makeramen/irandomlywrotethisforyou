@@ -247,22 +247,23 @@ def get_cached_entries():
 
 def format_entry(entry):
 
-    title = unicode(entry.title.text, 'utf-8')
+    title = unicode(entry.title.text, 'utf-8') if entry.title.text else ""
 
-    content = unicode(entry.content.text, 'utf-8')
+    content = unicode(entry.content.text, 'utf-8') if entry.content.text else ""
 
     imgurl = imgurl_re.findall(content)
 
-    content = xml_style_re.sub(r'', content)
-    content = ws_re.sub(r' ', content)
-    content = ws2_re.sub(r'<', content)
-    content = non_br_p_re.sub(r'', content)
-    content = br_re.sub(r'\n', content)
-    content = p_re.sub(r'\n\n', content)
-    content = content.strip()
-    content = dbln_re.sub(r'\n\n', content)
-    content = n_re.sub(r'<br />', content)
-    content = end_trim_re.sub(r'', content)
+    if content:
+        content = xml_style_re.sub(r'', content)
+        content = ws_re.sub(r' ', content)
+        content = ws2_re.sub(r'<', content)
+        content = non_br_p_re.sub(r'', content)
+        content = br_re.sub(r'\n', content)
+        content = p_re.sub(r'\n\n', content)
+        content = content.strip()
+        content = dbln_re.sub(r'\n\n', content)
+        content = n_re.sub(r'<br />', content)
+        content = end_trim_re.sub(r'', content)
 
     date = datetime.datetime.strptime(entry.published.text[:10], "%Y-%m-%d").strftime("%A, %B %d, %Y")
     url = entry.link[-1].href
