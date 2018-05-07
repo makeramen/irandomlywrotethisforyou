@@ -9,11 +9,12 @@ import (
 	"context"
 	json "encoding/json"
 	"errors"
-	"fmt"
+	"html/template"
 	"io/ioutil"
 	"math/rand"
 	"net/http"
 	"os"
+	"strconv"
 
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/log"
@@ -23,6 +24,10 @@ import (
 
 const blogID string = "6752139154038265086"
 const memcacheKey = "minposts"
+
+var (
+	stayTemplate = template.Must(template.ParseFiles("stay.html"))
+)
 
 func main() {
 	http.HandleFunc("/stay", handleStay)
@@ -58,8 +63,31 @@ func handleRedirect(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	log.Debugf(ctx, "how many minposts???")
+	log.Debugf(ctx, strconv.Itoa(len(minPosts)))
+
 	// redirect to a random url
 	http.Redirect(w, r, minPosts[rand.Intn(len(minPosts))].URL, 302)
+}
+
+func handleBri(w http.ResponseWriter, r *http.Request) {
+	ctx := appengine.NewContext(r)
+	apiKey, client, err := getClient(ctx, r)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// build a request for a random post
+	var request bytes.Buffer
+	request.WriteString("https://www.googleapis.com/blogger/v3/blogs/")
+	request.WriteString(blogID)
+	request.WriteString("/posts/")
+	// request.WriteString(ids[rand.Intn(len(ids))])
+	request.WriteString("?fields=id,url,title,content&key=")
+	request.WriteString(apiKey)
+
+	showPost(w, client, request.String())
 }
 
 func handleStay(w http.ResponseWriter, r *http.Request) {
@@ -82,35 +110,37 @@ func handleStay(w http.ResponseWriter, r *http.Request) {
 	request.WriteString(blogID)
 	request.WriteString("/posts/")
 	request.WriteString(minPosts[rand.Intn(len(minPosts))].ID)
-	request.WriteString("?fields=&key=")
+	request.WriteString("?fields=id,url,title,content,published&key=")
 	request.WriteString(apiKey)
 
-	showPost(w, client, request.String())
+	// fmt.Fprintln(w, request.String())
 
-	fmt.Fprintln(w, "Hello, world!")
+	showPost(w, client, request.String())
 }
 
-func handleBri(w http.ResponseWriter, r *http.Request) {
-	ctx := appengine.NewContext(r)
-	apiKey, client, err := getClient(ctx, r)
+func showPost(w http.ResponseWriter, client *http.Client, request string) {
+	resp, err := client.Get(request)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	// build a request for a random post
-	var request bytes.Buffer
-	request.WriteString("https://www.googleapis.com/blogger/v3/blogs/")
-	request.WriteString(blogID)
-	request.WriteString("/posts/")
-	// request.WriteString(ids[rand.Intn(len(ids))])
-	request.WriteString("?fields=&key=")
-	request.WriteString(apiKey)
+	post := post{}
+	err = json.Unmarshal(body, &post)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 
-	showPost(w, client, request.String())
-
-	// todo
-
+	params := templateParams{Title: post.Title, Content: post.Content, URL: post.URL, Published: post.Published}
+	stayTemplate.Execute(w, params)
+	w.Header().Set("Content-Type", "text/html")
 }
 
 func getMinPosts(ctx context.Context, client *http.Client, apiKey string) ([]minPost, bool, error) {
@@ -133,7 +163,7 @@ func getMinPosts(ctx context.Context, client *http.Client, apiKey string) ([]min
 		var request bytes.Buffer
 		request.WriteString("https://www.googleapis.com/blogger/v3/blogs/")
 		request.WriteString(blogID)
-		request.WriteString("/posts?fetchImages=true&fields=nextPageToken,items(url)&maxResults=500")
+		request.WriteString("/posts?fetchImages=true&fields=nextPageToken,items(id,url)&maxResults=500")
 
 		request.WriteString("&key=")
 		request.WriteString(apiKey)
@@ -174,29 +204,10 @@ func getMinPosts(ctx context.Context, client *http.Client, apiKey string) ([]min
 	}
 	err = memcache.Gob.Set(ctx, item)
 	if err != nil {
-		log.Debugf(ctx, "memcache set error")
 		return nil, false, err
 	}
-	log.Debugf(ctx, "memcache set success")
 
 	return minPosts, false, nil
-}
-
-func showPost(w http.ResponseWriter, client *http.Client, request string) {
-	resp, err := client.Get(request)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	post := post{}
-	json.Unmarshal(body, &post)
 }
 
 type response struct {
@@ -210,8 +221,17 @@ type minPost struct {
 }
 
 type post struct {
-	ID      string `json:"id"`
-	URL     string `json:"url"`
-	Title   string `json:"title"`
-	Content string `json:"content"`
+	ID        string `json:"id"`
+	URL       string `json:"url"`
+	Published string `json:"published"`
+	Title     string `json:"title"`
+	Content   string `json:"content"`
+}
+
+type templateParams struct {
+	Title     string
+	Content   string
+	Published string
+	URL       string
+	Imgurl    string
 }
