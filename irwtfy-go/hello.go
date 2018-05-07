@@ -57,7 +57,7 @@ func handleRedirect(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// redirect to a random url
-	http.Redirect(w, r, minPosts[rand.Intn(len(minPosts))].URL, 301)
+	http.Redirect(w, r, minPosts[rand.Intn(len(minPosts))].URL, 302)
 }
 
 func handleStay(w http.ResponseWriter, r *http.Request) {
