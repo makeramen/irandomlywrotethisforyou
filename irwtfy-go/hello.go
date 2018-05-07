@@ -22,7 +22,7 @@ import (
 )
 
 const blogID string = "6752139154038265086"
-const memcacheKey = "min_posts"
+const memcacheKey = "minposts"
 
 func main() {
 	http.HandleFunc("/stay", handleStay)
