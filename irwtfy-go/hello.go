@@ -31,6 +31,7 @@ var (
 )
 
 func main() {
+	rand.Seed(time.Now().UnixNano())
 	http.HandleFunc("/stay", handleStay)
 	http.HandleFunc("/stay/", handleStay)
 	http.HandleFunc("/bri", handleBri)
