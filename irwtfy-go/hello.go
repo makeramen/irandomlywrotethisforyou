@@ -24,7 +24,7 @@ import (
 )
 
 const blogID string = "6752139154038265086"
-const memcacheKey = "minposts"
+const memcacheKey = "minPosts"
 
 var (
 	stayTemplate = template.Must(template.ParseFiles("stay.html"))
@@ -209,8 +209,9 @@ func getMinPosts(ctx context.Context, client *http.Client, apiKey string) ([]min
 	}
 
 	item := &memcache.Item{
-		Key:    memcacheKey,
-		Object: minPosts,
+		Key:        memcacheKey,
+		Object:     minPosts,
+		Expiration: 12 * time.Hour,
 	}
 	err = memcache.Gob.Set(ctx, item)
 	if err != nil {
