@@ -26,6 +26,7 @@ const memcacheKey = "min_posts"
 
 func main() {
 	http.HandleFunc("/", handleRedirect)
+	http.HandleFunc("/test", handleTest)
 	http.HandleFunc("/stay", handleStay)
 	http.HandleFunc("/bri", handleBri)
 	appengine.Main()
@@ -50,7 +51,7 @@ func handleRedirect(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	minPosts, err := getMinPosts(ctx, client, apiKey)
+	minPosts, _, err := getMinPosts(ctx, client, apiKey)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -58,6 +59,27 @@ func handleRedirect(w http.ResponseWriter, r *http.Request) {
 
 	// redirect to a random url
 	http.Redirect(w, r, minPosts[rand.Intn(len(minPosts))].URL, 302)
+}
+
+func handleTest(w http.ResponseWriter, r *http.Request) {
+	ctx := appengine.NewContext(r)
+	apiKey, client, err := getClient(ctx, r)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	_, cacheHit, err := getMinPosts(ctx, client, apiKey)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if cacheHit {
+		fmt.Fprintln(w, "cache hit!")
+	} else {
+		fmt.Fprintln(w, "cache miss!")
+	}
 }
 
 func handleStay(w http.ResponseWriter, r *http.Request) {
@@ -68,7 +90,7 @@ func handleStay(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	minPosts, err := getMinPosts(ctx, client, apiKey)
+	minPosts, _, err := getMinPosts(ctx, client, apiKey)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -111,13 +133,13 @@ func handleBri(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func getMinPosts(ctx context.Context, client *http.Client, apiKey string) ([]minPost, error) {
+func getMinPosts(ctx context.Context, client *http.Client, apiKey string) ([]minPost, bool, error) {
 	var minPosts []minPost
 	_, err := memcache.Gob.Get(ctx, memcacheKey, minPosts)
 	if err == nil && minPosts != nil {
 		log.Debugf(ctx, "cache hit")
 		// cache hit return early
-		return minPosts, nil
+		return minPosts, true, nil
 	}
 	log.Debugf(ctx, "cache miss")
 
@@ -139,12 +161,12 @@ func getMinPosts(ctx context.Context, client *http.Client, apiKey string) ([]min
 
 		resp, err := client.Get(request.String())
 		if err != nil {
-			return nil, err
+			return nil, false, err
 		}
 		defer resp.Body.Close()
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			return nil, err
+			return nil, false, err
 		}
 
 		res := response{}
@@ -169,11 +191,11 @@ func getMinPosts(ctx context.Context, client *http.Client, apiKey string) ([]min
 	err = memcache.Gob.Set(ctx, item)
 	if err != nil {
 		log.Debugf(ctx, "memcache set error")
-		return nil, err
+		return nil, false, err
 	}
 	log.Debugf(ctx, "memcache set success")
 
-	return minPosts, nil
+	return minPosts, false, nil
 }
 
 func showPost(w http.ResponseWriter, client *http.Client, request string) {
