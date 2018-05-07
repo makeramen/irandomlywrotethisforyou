@@ -15,6 +15,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"time"
 
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/log"
@@ -113,8 +114,6 @@ func handleStay(w http.ResponseWriter, r *http.Request) {
 	request.WriteString("?fields=id,url,title,content,published&key=")
 	request.WriteString(apiKey)
 
-	// fmt.Fprintln(w, request.String())
-
 	showPost(w, client, request.String())
 }
 
@@ -138,7 +137,17 @@ func showPost(w http.ResponseWriter, client *http.Client, request string) {
 		return
 	}
 
-	params := templateParams{Title: post.Title, Content: post.Content, URL: post.URL, Published: post.Published}
+	t, err := time.Parse(time.RFC3339, post.Published)
+	if err == nil {
+		post.Published = t.Format("Monday, January 2, 2006")
+	}
+
+	params := templateParams{
+		Title:     post.Title,
+		Content:   template.HTML(post.Content),
+		URL:       post.URL,
+		Published: post.Published,
+	}
 	stayTemplate.Execute(w, params)
 	w.Header().Set("Content-Type", "text/html")
 }
@@ -230,7 +239,7 @@ type post struct {
 
 type templateParams struct {
 	Title     string
-	Content   string
+	Content   template.HTML
 	Published string
 	URL       string
 	Imgurl    string

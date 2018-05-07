@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+	<head>
+		<meta name="theme-color" content="#000000">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title>I [Randomly] Wrote This For You</title>
+
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+		<link type="text/css" rel="stylesheet" href="/stylesheets/style.css" />
+	</head>
+
+	<body>
+		<div id="wrapper" class="container-fluid">
+			<h2>{{.Published}}</h2>
+			<a href="{{.URL}}" target="_blank">
+				<h1>{{.Title}}</h1>
+			</a>
+			{{with .Imgurl}}
+			<a href="{{.URL}}" target="_blank">
+				<img id="image" class="img-responsive" src="{{.Imgurl}}" />
+			</a>
+			{{end}}
+				{{.Content}}
+		</div>
+	</body>
+</html>
