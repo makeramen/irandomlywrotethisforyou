@@ -25,10 +25,11 @@ const blogID string = "6752139154038265086"
 const memcacheKey = "min_posts"
 
 func main() {
-	http.HandleFunc("/", handleRedirect)
-	http.HandleFunc("/test", handleTest)
 	http.HandleFunc("/stay", handleStay)
+	http.HandleFunc("/stay/", handleStay)
 	http.HandleFunc("/bri", handleBri)
+	http.HandleFunc("/bri/", handleBri)
+	http.HandleFunc("/", handleRedirect)
 	appengine.Main()
 }
 
@@ -59,27 +60,6 @@ func handleRedirect(w http.ResponseWriter, r *http.Request) {
 
 	// redirect to a random url
 	http.Redirect(w, r, minPosts[rand.Intn(len(minPosts))].URL, 302)
-}
-
-func handleTest(w http.ResponseWriter, r *http.Request) {
-	ctx := appengine.NewContext(r)
-	apiKey, client, err := getClient(ctx, r)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	_, cacheHit, err := getMinPosts(ctx, client, apiKey)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	if cacheHit {
-		fmt.Fprintln(w, "cache hit!")
-	} else {
-		fmt.Fprintln(w, "cache miss!")
-	}
 }
 
 func handleStay(w http.ResponseWriter, r *http.Request) {
@@ -135,7 +115,11 @@ func handleBri(w http.ResponseWriter, r *http.Request) {
 
 func getMinPosts(ctx context.Context, client *http.Client, apiKey string) ([]minPost, bool, error) {
 	var minPosts []minPost
-	_, err := memcache.Gob.Get(ctx, memcacheKey, minPosts)
+	_, err := memcache.Gob.Get(ctx, memcacheKey, &minPosts)
+	if err != nil && err.Error() != "memcache: cache miss" {
+		return nil, false, err
+	}
+
 	if err == nil && minPosts != nil {
 		log.Debugf(ctx, "cache hit")
 		// cache hit return early
