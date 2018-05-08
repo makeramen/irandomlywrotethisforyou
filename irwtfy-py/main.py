@@ -8,6 +8,7 @@ import datetime
 import logging
 import webapp2
 import jinja2
+import time
 
 from google.appengine.api import memcache
 from gdata import service
@@ -30,6 +31,8 @@ p_re = re.compile(r'</?(?:p|div).*?>')
 n_re = re.compile(r'\n')
 dbln_re = re.compile(r'\n{3,}')
 end_trim_re = re.compile(r'__+.*')
+
+current_milli_time = lambda: int(round(time.time() * 1000))
 
 bri_urls = (
     "http://www.iwrotethisforyou.me/2007/07/first-sip.html",
@@ -225,13 +228,16 @@ def get_cached_entries():
     query.feed = '/feeds/6752139154038265086/posts/default'
     query.max_results = 500
 
+    totalstart = current_milli_time()
     bri_entries = []
     entries = []
     i = 0
     while 1:
+        start = current_milli_time()
         query.start_index = i*500 + 1
         feed = blogger_service.Get(query.ToUri())
-        logging.info('%d entries fetched, fetch number %d' % (len(feed.entry), i + 1))
+        logging.debug('%d entries fetched, fetch number %d' % (len(feed.entry), i + 1))
+        logging.debug('time taken: %d ms' % (current_milli_time() - start))
         entries.extend(feed.entry)
 
         if len(feed.entry) == 500:
@@ -240,6 +246,7 @@ def get_cached_entries():
             break
 
     logging.info('retrieved %d entries total' % len(entries))
+    logging.debug('total time taken: %d ms' % (current_milli_time() - totalstart))
 
     cachedentries = tuple(format_entry(e) for e in entries)
 
@@ -295,7 +302,7 @@ class RedirectHandler(webapp2.RequestHandler):
 class StayPageHandler(webapp2.RequestHandler):
     def get(self, bri=None):
         try:
-            # memcache.flush_all()
+            memcache.flush_all()
             if bri:
                 entries = memcache.get("bri_entries")
             else:
