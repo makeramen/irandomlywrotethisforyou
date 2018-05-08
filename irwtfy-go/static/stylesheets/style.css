@@ -3,6 +3,8 @@ body {
   background: black;
   font-family: Sans-serif;
   font: x-small "Trebuchet MS", Trebuchet, Verdana, Sans-serif;
+  color: #ccc;
+  line-height: 1.6em;
 }
 h1 {
   color: #AD9;
@@ -22,7 +24,10 @@ h2 {
   letter-spacing: 2px;
   font-weight: bold;
 }
-#wrapper {
+td.tr-caption {
+  font-size: 80%;
+}
+.wrapper {
   width: 410px;
   max-width: 410px;
   margin-bottom: 50px;
@@ -33,13 +38,15 @@ h2 {
   font-weight: normal;
   color: #CCC;
 }
-#image{
-  border: 1px solid #333;
-  padding: 4px;
-  margin-bottom: 10px;
-}
-#wrapper img {
+.wrapper img, table.tr-caption-container {
   padding:4px;
   border:1px solid #333333;
   box-sizing: content-box;
+}
+.tr-caption-container img {
+  border: none;
+  padding: 0;
+}
+table {
+  font-size: 13px;
 }

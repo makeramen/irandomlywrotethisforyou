@@ -31,6 +31,7 @@ func main() {
 	http.HandleFunc("/stay/", handleStay)
 	http.HandleFunc("/bri", handleBri)
 	http.HandleFunc("/bri/", handleBri)
+	http.HandleFunc("/test", handleTest)
 	http.HandleFunc("/", handleRedirect)
 	appengine.Main()
 }
