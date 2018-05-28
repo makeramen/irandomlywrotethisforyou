@@ -18,3 +18,6 @@ handlers:
 
 - url: /.*
   script: _go_app
+
+env_variables:
+  API_KEY: ""

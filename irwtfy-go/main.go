@@ -38,7 +38,7 @@ func main() {
 
 func getClient(ctx context.Context, r *http.Request) (string, *http.Client, error) {
 	apiKey, keyPresent := os.LookupEnv("API_KEY")
-	if !keyPresent {
+	if !keyPresent || len(apiKey) == 0 {
 		return "", nil, errors.New("api key not configured")
 	}
 
