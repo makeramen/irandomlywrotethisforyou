@@ -1,10 +1,8 @@
 body {
-  line-height: 1;
   background: black;
   font-family: Sans-serif;
   font: x-small "Trebuchet MS", Trebuchet, Verdana, Sans-serif;
   color: #ccc;
-  line-height: 1.6em;
 }
 h1 {
   color: #AD9;
@@ -31,30 +29,39 @@ td.tr-caption {
   width: 410px;
   max-width: 410px;
   margin-bottom: 50px;
-  padding: 0px;
-  line-height: 20px;
+  padding: 0px 8px;
+  line-height: 1.5em;
+  /* line-height: 20px; */
   font-size: 13px;
   font-style: normal;
   font-weight: normal;
   color: #CCC;
 }
+.wrapper img, table.tr-caption-container {
+  float: none !important;
+  padding: 4px;
+  border: 1px solid #333333;
+}
+.wrapper a[imageanchor="1"] {
+  display: block;
+  float: none !important;
+}
 @media screen and (max-width: 410px) {
   .wrapper {
-    width: 100%;
+    max-width: 100vw;
+  }
+  .wrapper a {
+    margin: 0px !important;
   }
   .wrapper img {
-    width: 100%;
+    max-width: 100% !important;
+    height: unset !important;
   }
-}
-.wrapper img, table.tr-caption-container {
-  padding:4px;
-  border:1px solid #333333;
-  box-sizing: content-box;
 }
 .tr-caption-container img {
   border: none;
-  padding: 0;
 }
 table {
   font-size: 13px;
+  line-height: 1.6em;
 }

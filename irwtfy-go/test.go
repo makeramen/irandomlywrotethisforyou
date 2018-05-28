@@ -29,5 +29,14 @@ func handleTest(w http.ResponseWriter, r *http.Request) {
 }
 
 var testUrls = [...]string{
-	"/2015/03/how-to-win-signed-copies-of-all-i-wrote.html",
+	// "/2015/03/how-to-win-signed-copies-of-all-i-wrote.html",
+	"/2010/03/defender-of-forgotten.html",
+	// "/2012/07/footsteps-made-of-fire.html",
+	// "/2007/09/rain.html",
+	// "/2009/12/corners-of-your-mouth.html",
+	// "/2010/11/monsters-i-miss.html",
+	// "/2018/01/the-sadness-of-comedy.html",
+	// "/2009/12/laboratory-in-my-heart.html",
+	// "/2014/02/blog-post.html",
+	// "/2010/08/dwindling-conversation.html",
 }

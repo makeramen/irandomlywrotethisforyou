@@ -7,10 +7,13 @@ import (
 	"io/ioutil"
 	"math/rand"
 	"net/http"
+	"regexp"
 	"time"
 
 	"google.golang.org/appengine"
 )
+
+var r, _ = regexp.Compile("(?:(?:<div>)?\\s*<br\\s*\\/?>\\s*(?:<\\/div>)?\\s*){3,}")
 
 func handleStay(w http.ResponseWriter, r *http.Request) {
 	ctx := appengine.NewContext(r)
@@ -65,7 +68,7 @@ func showPost(w http.ResponseWriter, client *http.Client, request string) {
 
 	params := templateParams{
 		Title:     post.Title,
-		Content:   template.HTML(post.Content),
+		Content:   template.HTML(r.ReplaceAllLiteralString(post.Content, "")),
 		URL:       post.URL,
 		Published: post.Published,
 	}
