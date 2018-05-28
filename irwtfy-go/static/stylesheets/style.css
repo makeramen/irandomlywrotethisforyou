@@ -38,6 +38,14 @@ td.tr-caption {
   font-weight: normal;
   color: #CCC;
 }
+@media screen and (max-width: 410px) {
+  .wrapper {
+    width: 100%;
+  }
+  .wrapper img {
+    width: 100%;
+  }
+}
 .wrapper img, table.tr-caption-container {
   padding:4px;
   border:1px solid #333333;
