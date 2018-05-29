@@ -30,7 +30,6 @@ td.tr-caption {
   max-width: 410px;
   margin-bottom: 50px;
   line-height: 1.5em;
-  /* line-height: 20px; */
   font-size: 13px;
   font-style: normal;
   font-weight: normal;
@@ -47,7 +46,9 @@ td.tr-caption {
 }
 @media screen and (max-width:480px) {
   .wrapper {
-    max-width: 95vw;
+    max-width: 100vw;
+    margin-left: 0px;
+    margin-right: 0px;
   }
   .wrapper a {
     margin-left: 0px !important;
