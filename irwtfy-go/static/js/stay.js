@@ -5,7 +5,7 @@ $(".wrapper a:has(img)").css("display","block");
 var node = $(".wrapper").contents().toArray().find(n => n.nodeType == 3 && $.trim(n.textContent))
 while (node.previousSibling
     && (node.previousSibling.nodeName == "BR" || node.previousSibling.nodeType == 8)) {
-    node.previousSibling.remove();
+    // node.previousSibling.remove();
 }
 
 // START responsive youtube embed
