@@ -29,8 +29,9 @@ func handleTest(w http.ResponseWriter, r *http.Request) {
 }
 
 var testUrls = [...]string{
+	"/2016/04/the-terrible-inadequacy-of-entire-life.html",
 	// "/2015/03/how-to-win-signed-copies-of-all-i-wrote.html",
-	"/2010/03/defender-of-forgotten.html",
+	// "/2010/03/defender-of-forgotten.html",
 	// "/2012/07/footsteps-made-of-fire.html",
 	// "/2007/09/rain.html",
 	// "/2009/12/corners-of-your-mouth.html",
