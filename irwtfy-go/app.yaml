@@ -20,9 +20,6 @@ handlers:
   static_dir: static/js
   secure: always
 
-- url: /
-  script: _go_app
-
 - url: /.*
   script: _go_app
   secure: always
