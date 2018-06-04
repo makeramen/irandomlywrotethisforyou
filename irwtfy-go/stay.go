@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"regexp"
 	"strings"
+	"time"
 
 	"google.golang.org/appengine"
 )
@@ -14,7 +15,7 @@ var trimSpace, _ = regexp.Compile("(?:(?:<div>)?\\s*<br\\s*\\/?>\\s*(?:<\\/div>)
 func handleStay(w http.ResponseWriter, r *http.Request) {
 	ctx := appengine.NewContext(r)
 	_, client, err := getClient(ctx, r)
-	if err != nil {
+	if err != nil && err != errAPIKeyNotConfigured {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -23,6 +24,11 @@ func handleStay(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
+	}
+
+	t, err := time.Parse(time.RFC3339, post.Published.Value)
+	if err == nil {
+		post.Published.Value = t.Format("Monday, January 2, 2006")
 	}
 
 	params := templateParams{

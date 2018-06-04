@@ -42,10 +42,10 @@ type tag struct {
 }
 
 type entry struct {
-	Title     tag    `json"title"`
+	Title     tag    `json:"title"`
 	Links     []link `json:"link"`
 	Content   tag    `json:"content"`
-	Published tag    `json"title"`
+	Published tag    `json:"published"`
 }
 
 type link struct {

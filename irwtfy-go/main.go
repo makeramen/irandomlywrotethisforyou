@@ -24,7 +24,8 @@ const memcacheKey = "min_posts"
 const keyNumPosts = "num_posts"
 
 var (
-	stayTemplate = template.Must(template.ParseFiles("stay.html"))
+	stayTemplate           = template.Must(template.ParseFiles("stay.html"))
+	errAPIKeyNotConfigured = errors.New("api key not configured")
 )
 
 func main() {
@@ -38,21 +39,21 @@ func main() {
 	appengine.Main()
 }
 
-func getClient(ctx context.Context, r *http.Request) (string, *http.Client, error) {
+func getClient(ctx context.Context, r *http.Request) (apiKey string, client *http.Client, err error) {
 	apiKey, keyPresent := os.LookupEnv("API_KEY")
 	if !keyPresent || len(apiKey) == 0 {
-		return "", nil, errors.New("api key not configured")
+		err = errAPIKeyNotConfigured
 	}
 
-	client := urlfetch.Client(ctx)
-	return apiKey, client, nil
+	client = urlfetch.Client(ctx)
+	return
 }
 
 func handleRedirect(w http.ResponseWriter, r *http.Request) {
 	ctx := appengine.NewContext(r)
 
 	_, client, err := getClient(ctx, r)
-	if err != nil {
+	if err != nil && err != errAPIKeyNotConfigured {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
