@@ -1,15 +1,16 @@
 package main
 
 import (
-	"bytes"
 	"context"
 	json "encoding/json"
 	"errors"
+	"fmt"
 	"html/template"
 	"io/ioutil"
 	"math/rand"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 
 	"google.golang.org/appengine"
@@ -20,6 +21,7 @@ import (
 
 const blogID string = "6752139154038265086"
 const memcacheKey = "min_posts"
+const keyNumPosts = "num_posts"
 
 var (
 	stayTemplate = template.Must(template.ParseFiles("stay.html"))
@@ -49,86 +51,87 @@ func getClient(ctx context.Context, r *http.Request) (string, *http.Client, erro
 func handleRedirect(w http.ResponseWriter, r *http.Request) {
 	ctx := appengine.NewContext(r)
 
-	apiKey, client, err := getClient(ctx, r)
+	_, client, err := getClient(ctx, r)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	minPosts, _, err := getMinPosts(ctx, client, apiKey)
+	postURL, _, _, err := getRandomPost(ctx, client)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	// redirect to a random url
-	http.Redirect(w, r, minPosts[rand.Intn(len(minPosts))].URL, 302)
+	http.Redirect(w, r, postURL, 302)
 }
 
-func getMinPosts(ctx context.Context, client *http.Client, apiKey string) ([]minPost, bool, error) {
-	var minPosts []minPost
-	_, err := gzipGob.Get(ctx, memcacheKey, &minPosts)
-	if err != nil && err.Error() != "memcache: cache miss" {
-		return nil, false, err
+func getRandomPost(ctx context.Context, client *http.Client) (url string, post entry, count int, err error) {
+	postCount, err := getPostCount(ctx, client)
+	if err != nil {
+		return
 	}
 
-	if err == nil && minPosts != nil {
-		log.Debugf(ctx, "cache hit")
-		// cache hit return early
-		return minPosts, true, nil
+	for url == "" {
+		url, post, count, err = getPost(ctx, client, rand.Intn(postCount)+1, postCount)
+		if err != nil {
+			return
+		}
 	}
-	log.Debugf(ctx, "cache miss")
+	return
+}
 
-	minPosts = []minPost{}
-	var pageToken string
-	for {
-		var request bytes.Buffer
-		request.WriteString("https://www.googleapis.com/blogger/v3/blogs/")
-		request.WriteString(blogID)
-		request.WriteString("/posts?fetchImages=true&fields=nextPageToken,items(id,url)&maxResults=500")
+func getPost(ctx context.Context, client *http.Client, index int, prevCount int) (url string, post entry, count int, err error) {
+	count = 0
+	post = entry{}
+	url = ""
+	request := fmt.Sprintf("https://www.blogger.com/feeds/%s/posts/default?alt=json&start-index=%d&max-results=1", blogID, index)
+	log.Debugf(ctx, "request: %s", request)
+	resp, err := client.Get(request)
+	if err != nil {
+		return
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return
+	}
 
-		request.WriteString("&key=")
-		request.WriteString(apiKey)
-
-		if len(pageToken) > 0 {
-			request.WriteString("&pageToken=")
-			request.WriteString(pageToken)
-		}
-
-		resp, err := client.Get(request.String())
-		if err != nil {
-			return nil, false, err
-		}
-		defer resp.Body.Close()
-		body, err := ioutil.ReadAll(resp.Body)
-		if err != nil {
-			return nil, false, err
-		}
-
-		res := response{}
-		json.Unmarshal(body, &res)
-
-		// append to list of all urls
-		minPosts = append(minPosts, res.Items...)
-
-		// repeat if there are more pages
-		if len(res.NextPageToken) > 0 {
-			pageToken = res.NextPageToken
-			continue
-		} else {
+	res := responseV1{}
+	json.Unmarshal(body, &res)
+	count, err = strconv.Atoi(res.Feed.TotalResults.Value)
+	if err != nil {
+		return
+	}
+	post = res.Feed.Entries[0]
+	for _, link := range res.Feed.Entries[0].Links {
+		if link.Rel == "alternate" && link.Type == "text/html" {
+			url = link.Href
 			break
 		}
 	}
 
-	item := &memcache.Item{
-		Key:        memcacheKey,
-		Object:     minPosts,
-		Expiration: 12 * time.Hour,
-	}
-	err = gzipGob.Set(ctx, item)
-	if err != nil {
-		return nil, false, err
+	if count != prevCount {
+		item := &memcache.Item{
+			Key:        keyNumPosts,
+			Value:      []byte(strconv.Itoa(count)),
+			Expiration: 12 * time.Hour,
+		}
+		err = memcache.Set(ctx, item)
 	}
 
-	return minPosts, false, nil
+	return
+}
+
+func getPostCount(ctx context.Context, client *http.Client) (count int, err error) {
+	item, err := memcache.Get(ctx, keyNumPosts)
+	if err == memcache.ErrCacheMiss {
+		_, _, count, err = getPost(ctx, client, 1, 0)
+		return
+	} else if err != nil {
+		return
+	}
+	count, err = strconv.Atoi(string(item.Value[:]))
+	return
 }

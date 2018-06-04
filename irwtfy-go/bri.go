@@ -2,8 +2,13 @@ package main
 
 import (
 	"bytes"
+	json "encoding/json"
+	"html/template"
+	"io/ioutil"
 	"math/rand"
 	"net/http"
+	"strings"
+	"time"
 
 	"google.golang.org/appengine"
 )
@@ -26,6 +31,41 @@ func handleBri(w http.ResponseWriter, r *http.Request) {
 	request.WriteString(apiKey)
 
 	showPost(w, client, request.String())
+}
+
+func showPost(w http.ResponseWriter, client *http.Client, request string) {
+	resp, err := client.Get(request)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	post := post{}
+	err = json.Unmarshal(body, &post)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	t, err := time.Parse(time.RFC3339, post.Published)
+	if err == nil {
+		post.Published = t.Format("Monday, January 2, 2006")
+	}
+
+	params := templateParams{
+		Title:     post.Title,
+		Content:   template.HTML(strings.Replace(trimSpace.ReplaceAllLiteralString(post.Content, ""), "http://", "https://", -1)),
+		URL:       post.URL,
+		Published: post.Published,
+	}
+	stayTemplate.Execute(w, params)
+	w.Header().Set("Content-Type", "text/html")
 }
 
 var briUrls = [...]string{
