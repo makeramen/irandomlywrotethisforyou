@@ -11,6 +11,7 @@ import (
 )
 
 var trimSpace, _ = regexp.Compile("(?:(?:<div>)?\\s*<br\\s*\\/?>\\s*(?:<\\/div>)?\\s*){3,}")
+var stayTemplate = template.Must(template.ParseFiles("template.html"))
 
 func handleStay(w http.ResponseWriter, r *http.Request) {
 	ctx := appengine.NewContext(r)

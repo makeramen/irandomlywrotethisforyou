@@ -1,0 +1,62 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+	<head>
+		<meta name="theme-color" content="#000000">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title>I [Randomly] Wrote This For You</title>
+
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+		<link type="text/css" rel="stylesheet" href="/css/style.css" />
+	</head>
+
+	<body>
+		<div id="wrapper" class="container-fluid wrapper">
+			<h2>{{.Published}}</h2>
+			<a href="{{.URL}}" target="_blank">
+				<h1>{{.Title}}</h1>
+			</a>
+			{{.Content}}
+		</div>
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+		<script>
+			// Set all anchors that wrap images to display: block
+			$(".wrapper a:has(img)").css("display","block");
+
+			// Remove any line breaks immediately before the text
+			var node = $(".wrapper").contents().toArray().find(n => n.nodeType == 3 && $.trim(n.textContent))
+			while (node && node.previousSibling
+				&& (node.previousSibling.nodeName == "BR" || node.previousSibling.nodeType == 8)) {
+				node.previousSibling.remove();
+			}
+			
+			// Find all YouTube and Vimeo videos
+			var $allVideos = $("iframe[src*='www.youtube.com'], iframe[src*='player.vimeo.com']");
+
+			// Figure out and save aspect ratio for each video
+			$allVideos.each(function() {
+				$(this)
+				.data('aspectRatio', this.height / this.width)
+				// and remove the hard coded width/height
+				.removeAttr('height')
+				.removeAttr('width');
+			});
+
+			// When the window is resized
+			$(window).resize(function() {
+				// Resize all videos according to their own aspect ratio
+				$allVideos.each(function() {
+				var $el = $(this);
+				// Get parent width of this video
+				var newWidth = $el.parent().width();
+				$el
+					.width(newWidth)
+					.height(newWidth * $el.data('aspectRatio'));
+				});
+
+			// Kick off one resize to fix all videos on page load
+			}).resize();
+
+		</script>
+	</body>
+</html>

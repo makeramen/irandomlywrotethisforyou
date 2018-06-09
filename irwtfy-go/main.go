@@ -5,7 +5,6 @@ import (
 	json "encoding/json"
 	"errors"
 	"fmt"
-	"html/template"
 	"io/ioutil"
 	"math/rand"
 	"net/http"
@@ -24,7 +23,6 @@ const memcacheKey = "min_posts"
 const keyNumPosts = "num_posts"
 
 var (
-	stayTemplate           = template.Must(template.ParseFiles("stay.html"))
 	errAPIKeyNotConfigured = errors.New("api key not configured")
 )
 
