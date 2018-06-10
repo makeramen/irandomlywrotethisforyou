@@ -32,13 +32,13 @@ function getRandomEntry(done) {
         success: function(result) {
             var count = result.feed.openSearch$totalResults.$t
             Cookies.set('count', count)
-            var entry = result.feed.entry[0] 
+            var entry = result.feed.entry[0]
             $app.published = new Date(entry.published.$t).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
             $app.title = entry.title.$t
             $app.url = entry.link.find(function(l) { return l.rel == 'alternate' }).href
             $app.content = entry.content.$t
-                .replace(/(?:(?:<div>)?\s*<br\s*\/?>\s*(?:<\/div>)?\s*){3,}/i, '')
-                .replace('http://', 'https://')
+                .replace(/(?:(?:<div>)?\s*<br\s*\/?>\s*(?:<\/div>)?\s*){3,}/gi, '')
+                .replace(/http:\/\//gi, 'https://')
             Vue.nextTick(function() {
                 // Set all anchors that wrap images to display: block
                 $("#content a:has(img)").css("display","block");
@@ -94,6 +94,7 @@ getRandomEntry(function() {})
 
 // When the window is resized
 $(window).resize(function() {
+    if (!$allVideos) { return }
     // Resize all videos according to their own aspect ratio
     $allVideos.each(function() {
     var $el = $(this);
