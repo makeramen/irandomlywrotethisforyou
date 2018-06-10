@@ -28,11 +28,6 @@ var (
 
 func main() {
 	rand.Seed(time.Now().UnixNano())
-	http.HandleFunc("/stay", handleStay)
-	http.HandleFunc("/stay/", handleStay)
-	http.HandleFunc("/bri", handleBri)
-	http.HandleFunc("/bri/", handleBri)
-	http.HandleFunc("/test", handleTest)
 	http.HandleFunc("/", handleRedirect)
 	appengine.Main()
 }
@@ -97,7 +92,7 @@ func getPost(ctx context.Context, client *http.Client, index int, prevCount int)
 		return
 	}
 
-	res := responseV1{}
+	res := response{}
 	json.Unmarshal(body, &res)
 	count, err = strconv.Atoi(res.Feed.TotalResults.Value)
 	if err != nil {

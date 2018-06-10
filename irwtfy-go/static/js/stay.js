@@ -1,10 +1,10 @@
 function getCount() {
-    var count = Cookies.get('count')
+    const count = Cookies.get('count')
     if (count) {
-        return Promise.resolve(count)
+        return Promise.resolve(parseInt(count))
     }
     return $.ajax({
-            url :'https://www.blogger.com/feeds/6752139154038265086/posts/default',
+            url: 'https://www.blogger.com/feeds/6752139154038265086/posts/default',
             crossDomain: true,
             dataType: 'jsonp',
             data: {
@@ -12,24 +12,23 @@ function getCount() {
                 'start-index': 1,
                 'max-results': 1,
             },
-            success: function(result) {
-                count = parseInt(result.feed.openSearch$totalResults.$t)
-                Cookies.set('count', count, { expires: 365 })
-            onCount(count)
-            }
         })
     .then(function(result) {
-        count = parseInt(result.feed.openSearch$totalResults.$t)
-        Cookies.set('count', count, { expires: 365 })
-        return Promise.resolve(count)
+        const count = result.feed.openSearch$totalResults.$t
+        setCountCookie(count)
+        return Promise.resolve(parseInt(count))
     })
 }
 
-function getRandomEntry() {
+function setCountCookie(count) {
+    Cookies.set('count', count, { expires: 365 })
+}
+
+function showRandomEntry() {
     return getCount()
         .then(function(count) {
             return $.ajax({
-                url :'https://www.blogger.com/feeds/6752139154038265086/posts/default',
+                url: 'https://www.blogger.com/feeds/6752139154038265086/posts/default',
                 crossDomain: true,
                 dataType: 'jsonp',
                 data : {
@@ -40,9 +39,9 @@ function getRandomEntry() {
             })
         })
         .then(function(result) {
-            var count = result.feed.openSearch$totalResults.$t
-            Cookies.set('count', count)
-            var entry = result.feed.entry[0]
+            const count = result.feed.openSearch$totalResults.$t
+            setCountCookie(count)
+            const entry = result.feed.entry[0]
             $app.published = new Date(entry.published.$t).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
             $app.title = entry.title.$t
             $app.url = entry.link.find(function(l) { return l.rel == 'alternate' }).href

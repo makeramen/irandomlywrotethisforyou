@@ -1,4 +1,5 @@
 function sanitizeContent(content) {
+    if (content === undefined) { return }
     return content
         .replace(/(?:(?:<div.*>)?\s*<br\s*\/?>\s*(?:<\/div>)?\s*){3,}/gi, '')
         .replace(/http:\/\//gi, 'https://')
@@ -36,7 +37,7 @@ function cleanUpAfterLoad() {
 
 // When the window is resized
 $(window).resize(function() {
-    if (!$allVideos) { return }
+    if ($allVideos === undefined) { return }
     // Resize all videos according to their own aspect ratio
     $allVideos.each(function() {
     var $el = $(this);
@@ -62,8 +63,8 @@ var $ptr = PullToRefresh.init({
     mainElement: '#wrapper',
     passive: true,
     onRefresh: function(done) { 
-        getRandomEntry().then(done)
+        showRandomEntry().then(done)
     }
 })
 
-$(function () { getRandomEntry() } )
+$(function () { showRandomEntry() } )
