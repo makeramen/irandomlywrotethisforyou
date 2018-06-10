@@ -153,6 +153,7 @@ const pathIdMap = {
     '/2016/11/the-hard-way.html': '5888812094858882520',
     '/2016/11/the-light-of-all-stars.html': '7806873715178988815',
     '/2017/02/the-gods-tremble-before-quiet-strength.html': '1914117906155919546',
+    '/2017/06/the-words-made-of-still-water.html': '1838130485550506283',
 }
 
 function getId(apiKey, path) {
