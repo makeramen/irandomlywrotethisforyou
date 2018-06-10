@@ -152,6 +152,8 @@ const pathIdMap = {
     '/2016/10/the-anchors-i-found-in-others.html': '2638766985369595292',
     '/2016/11/the-hard-way.html': '5888812094858882520',
     '/2016/11/the-light-of-all-stars.html': '7806873715178988815',
+    '/2017/01/the-parts-we-keep.html': '1681739096683495535',
+    '/2017/01/the-nature-of-hands.html': '9123699842730413817',
     '/2017/02/the-gods-tremble-before-quiet-strength.html': '1914117906155919546',
     '/2017/06/the-words-made-of-still-water.html': '1838130485550506283',
 }
