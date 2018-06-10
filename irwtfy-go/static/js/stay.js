@@ -1,7 +1,9 @@
 function getCount() {
     var count = Cookies.get('count')
-    if (!count) {
-        $.ajax({
+    if (count) {
+        return Promise.resolve(count)
+    }
+    return $.ajax({
             url :'https://www.blogger.com/feeds/6752139154038265086/posts/default',
             crossDomain: true,
             dataType: 'jsonp',
@@ -13,23 +15,31 @@ function getCount() {
             success: function(result) {
                 count = parseInt(result.feed.openSearch$totalResults.$t)
                 Cookies.set('count', count, { expires: 365 })
+            onCount(count)
             }
         })
+    .then(function(result) {
+        count = parseInt(result.feed.openSearch$totalResults.$t)
+        Cookies.set('count', count, { expires: 365 })
+        return Promise.resolve(count)
+    })
     }
-    return count
-}
 
-function getRandomEntry(done) {
-    $.ajax({
-        url :'https://www.blogger.com/feeds/6752139154038265086/posts/default',
-        crossDomain: true,
-        dataType: 'jsonp',
-        data : {
-            'alt': 'json',
-            'start-index': Math.floor(Math.random() * getCount()) + 1,
-            'max-results': 1,
-        },
-        success: function(result) {
+function getRandomEntry() {
+    return getCount()
+        .then(function(count) {
+            return $.ajax({
+                url :'https://www.blogger.com/feeds/6752139154038265086/posts/default',
+                crossDomain: true,
+                dataType: 'jsonp',
+                data : {
+                    'alt': 'json',
+                    'start-index': Math.floor(Math.random() * count) + 1,
+                    'max-results': 1,
+                },
+            })
+        })
+        .then(function(result) {
             var count = result.feed.openSearch$totalResults.$t
             Cookies.set('count', count)
             var entry = result.feed.entry[0]
@@ -68,9 +78,7 @@ function getRandomEntry(done) {
                     $(window).resize()
                 }
             })
-            done()
-        }
-    })
+        })
 }
 
 var $app = new Vue({
@@ -86,7 +94,7 @@ var $ptr = PullToRefresh.init({
     mainElement: '#wrapper',
     passive: true,
     onRefresh: function(done) { 
-        getRandomEntry(done)
+        getRandomEntry().then(done)
     }
 })
 var $allVideos
