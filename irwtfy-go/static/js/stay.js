@@ -1,16 +1,20 @@
 function getCount() {
     var count = Cookies.get('count')
     if (!count) {
-        $.get('https://www.blogger.com/feeds/6752139154038265086/posts/default',
-            {
+        $.ajax({
+            url :'https://www.blogger.com/feeds/6752139154038265086/posts/default',
+            crossDomain: true,
+            dataType: 'jsonp',
+            data: {
                 'alt': 'json',
                 'start-index': 1,
                 'max-results': 1,
             },
-            function(result) {
+            success: function(result) {
                 count = parseInt(result.feed.openSearch$totalResults.$t)
                 Cookies.set('count', count, { expires: 365 })
-            })
+            }
+        })
     }
     return count
 }
