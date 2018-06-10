@@ -2,7 +2,7 @@ body {
   background: black;
   font-family: Sans-serif;
   font: x-small "Trebuchet MS", Trebuchet, Verdana, Sans-serif;
-  color: #ccc;
+  color: #CCC;
 }
 h1 {
   color: #AD9;
@@ -68,4 +68,7 @@ td.tr-caption {
 table {
   font-size: 13px;
   line-height: 1.6em;
+}
+.ptr--text, .ptr--icon {
+  color: #CCC !important;
 }

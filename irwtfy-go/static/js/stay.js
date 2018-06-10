@@ -78,6 +78,7 @@ var $app = new Vue({
 })
 var $ptr = PullToRefresh.init({
     mainElement: '#wrapper',
+    passive: true,
     onRefresh: function(done) { 
         getRandomEntry(done)
     }
