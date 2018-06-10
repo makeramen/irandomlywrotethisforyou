@@ -12,6 +12,16 @@ handlers:
   upload: static/favicon.ico
   secure: always
 
+- url: /stay
+  static_files: static/stay.html
+  upload: static/stay.html
+  secure: always
+
+- url: /bri
+  static_files: static/bri.html
+  upload: static/bri.html
+  secure: always
+
 - url: /css
   static_dir: static/css
   secure: always
