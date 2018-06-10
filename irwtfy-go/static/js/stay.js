@@ -17,7 +17,7 @@ function getCount() {
 
 function getRandomEntry(done) {
     $.ajax({
-        url :'http://www.blogger.com/feeds/6752139154038265086/posts/default',
+        url :'https://www.blogger.com/feeds/6752139154038265086/posts/default',
         crossDomain: true,
         dataType: 'jsonp',
         data : {
