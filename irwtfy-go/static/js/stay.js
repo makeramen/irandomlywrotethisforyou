@@ -36,7 +36,9 @@ function getRandomEntry(done) {
             $app.published = new Date(entry.published.$t).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
             $app.title = entry.title.$t
             $app.url = entry.link.find(function(l) { return l.rel == 'alternate' }).href
-            $app.content = entry.content.$t.replace(/(?:(?:<div>)?\s*<br\s*\/?>\s*(?:<\/div>)?\s*){3,}/i, '')
+            $app.content = entry.content.$t
+                .replace(/(?:(?:<div>)?\s*<br\s*\/?>\s*(?:<\/div>)?\s*){3,}/i, '')
+                .replace('http://', 'https://')
             Vue.nextTick(function() {
                 // Set all anchors that wrap images to display: block
                 $("#content a:has(img)").css("display","block");
