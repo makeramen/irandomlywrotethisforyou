@@ -3,12 +3,10 @@ package main
 import (
 	"context"
 	json "encoding/json"
-	"errors"
 	"fmt"
 	"io/ioutil"
 	"math/rand"
 	"net/http"
-	"os"
 	"strconv"
 	"time"
 
@@ -22,34 +20,16 @@ const blogID string = "6752139154038265086"
 const memcacheKey = "min_posts"
 const keyNumPosts = "num_posts"
 
-var (
-	errAPIKeyNotConfigured = errors.New("api key not configured")
-)
-
 func main() {
 	rand.Seed(time.Now().UnixNano())
 	http.HandleFunc("/", handleRedirect)
 	appengine.Main()
 }
 
-func getClient(ctx context.Context, r *http.Request) (apiKey string, client *http.Client, err error) {
-	apiKey, keyPresent := os.LookupEnv("API_KEY")
-	if !keyPresent || len(apiKey) == 0 {
-		err = errAPIKeyNotConfigured
-	}
-
-	client = urlfetch.Client(ctx)
-	return
-}
-
 func handleRedirect(w http.ResponseWriter, r *http.Request) {
 	ctx := appengine.NewContext(r)
 
-	_, client, err := getClient(ctx, r)
-	if err != nil && err != errAPIKeyNotConfigured {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	client := urlfetch.Client(ctx)
 
 	postURL, _, _, err := getRandomPost(ctx, client)
 	if err != nil {

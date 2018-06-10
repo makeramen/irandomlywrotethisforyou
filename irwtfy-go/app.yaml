@@ -33,6 +33,3 @@ handlers:
 - url: /.*
   script: _go_app
   secure: always
-
-env_variables:
-  API_KEY: ""
