@@ -46,7 +46,7 @@ export const randomEntry = functions.https.onRequest((request, response) => coun
     })
     .then(resp => {
       const url = resp.data.feed.entry[0].link.find(l => l.rel === 'alternate').href
-      const c = resp.data.feed.openSearch$totalResults.$t
+      const c = parseInt(resp.data.feed.openSearch$totalResults.$t)
       if (c !== count) {
         return countRef.set({ count: c }).then(_ => Promise.resolve(url))
       }
