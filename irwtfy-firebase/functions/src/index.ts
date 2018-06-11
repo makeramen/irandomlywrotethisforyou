@@ -9,11 +9,11 @@ const db = admin.firestore()
 const countRef = db.collection('irwtfy').doc('count')
 const agent = new https.Agent({ keepAlive: true })
 
-export const randomEntry = functions.https.onRequest((request, response) => countRef
-  .get()
+export const randomEntry = functions.https.onRequest((request, response) => countRef.get()
   .then(doc => {
     if (!doc.exists) {
-      return Promise.reject('document doesnt exist')
+      console.warn('No stored count!')
+      return Promise.reject('no stored count')
     } else {
       return Promise.resolve(doc.data().count)
     }
