@@ -11,9 +11,9 @@ const agent = new Agent({ keepAlive: true })
 
 export const randomEntry = https.onRequest((request, response) => countRef.get()
   .then(doc => {
-    if (doc.exists && !('count' in doc.data())) {
+    if (doc.exists && 'count' in doc.data()) {
       const count = parseInt(doc.data().count)
-      if (typeof count === 'number' && count % 1 !== 0) {
+      if (typeof count === 'number' && count % 1 === 0) {
         return Promise.resolve(doc.data().count)
       }
       console.log('Store count is bad format!')
