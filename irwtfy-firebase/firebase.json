@@ -15,6 +15,20 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/",
+        "function" : "randomEntry"
+      },
+      {
+        "source": "/stay",
+        "destination": "/stay.html"
+      },
+      {
+        "source": "/bri",
+        "destination": "/bri.html"
+      }
     ]
   }
 }
