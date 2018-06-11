@@ -1,15 +1,15 @@
-import * as https from 'https'
+import { Agent } from 'https'
 import axios from 'axios'
-import * as admin from 'firebase-admin'
-import * as functions from 'firebase-functions'
+import { initializeApp, firestore} from 'firebase-admin'
+import { config, https } from 'firebase-functions'
 
-admin.initializeApp(functions.config().firebase)
+initializeApp(config().firebase)
 
-const db = admin.firestore()
+const db = firestore()
 const countRef = db.collection('irwtfy').doc('count')
-const agent = new https.Agent({ keepAlive: true })
+const agent = new Agent({ keepAlive: true })
 
-export const randomEntry = functions.https.onRequest((request, response) => countRef.get()
+export const randomEntry = https.onRequest((request, response) => countRef.get()
   .then(doc => {
     if (doc.exists && !('count' in doc.data())) {
       const count = parseInt(doc.data().count)
