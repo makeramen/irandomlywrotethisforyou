@@ -1,7 +1,7 @@
 function sanitizeContent(content) {
     if (typeof content === 'undefined') { return }
     return content
-        .replace(/(?:(?:<div.*>)?\s*<br\s*\/?>\s*(?:<\/div>)?\s*){3,}/gi, '')
+        .replace(/(?:(?:<div>)?\s*<br\s*\/?>\s*(?:<\/div>)?\s*){3,}/gi, '')
         .replace(/http:\/\//gi, 'https://')
 }
 

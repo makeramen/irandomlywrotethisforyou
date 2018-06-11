@@ -28,6 +28,10 @@
       {
         "source": "/bri",
         "destination": "/bri.html"
+      },
+      {
+        "source": "/test",
+        "destination": "/test.html"
       }
     ]
   }
