@@ -15,7 +15,7 @@ export const randomEntry = functions.https.onRequest((request, response) => coun
       || !('count' in doc.data())
       || typeof doc.data().count !== 'number'
       || doc.data().count % 1 !== 0) {
-      console.warn('No stored count!')
+      console.log('No stored count!')
       return Promise.reject(new Error('No stored count.'))
     } else {
       return Promise.resolve(doc.data().count)
