@@ -11,15 +11,16 @@ const agent = new https.Agent({ keepAlive: true })
 
 export const randomEntry = functions.https.onRequest((request, response) => countRef.get()
   .then(doc => {
-    if (!doc.exists
-      || !('count' in doc.data())
-      || typeof doc.data().count !== 'number'
-      || doc.data().count % 1 !== 0) {
-      console.log('No stored count!')
-      return Promise.reject(new Error('No stored count.'))
-    } else {
-      return Promise.resolve(doc.data().count)
+    if (doc.exists && !('count' in doc.data())) {
+      const count = parseInt(doc.data().count)
+      if (typeof count === 'number' && count % 1 !== 0) {
+        return Promise.resolve(doc.data().count)
+      }
+      console.log('Store count is bad format!')
+      return Promise.reject(undefined)
     }
+    console.log('No stored count!')
+    return Promise.reject(undefined)
   })
   .catch(err => axios
     .get('https://www.blogger.com/feeds/6752139154038265086/posts/default', {
