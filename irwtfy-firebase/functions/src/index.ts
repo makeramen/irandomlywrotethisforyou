@@ -11,9 +11,12 @@ const agent = new https.Agent({ keepAlive: true })
 
 export const randomEntry = functions.https.onRequest((request, response) => countRef.get()
   .then(doc => {
-    if (!doc.exists) {
+    if (!doc.exists
+      || !('count' in doc.data())
+      || typeof doc.data().count !== 'number'
+      || doc.data().count % 1 !== 0) {
       console.warn('No stored count!')
-      return Promise.reject('no stored count')
+      return Promise.reject(new Error('No stored count.'))
     } else {
       return Promise.resolve(doc.data().count)
     }
