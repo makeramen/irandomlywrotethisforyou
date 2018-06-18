@@ -91,6 +91,7 @@ const pathIdMap = {
     '/2009/12/laboratory-in-my-heart.html': '2747884216270809775',
     '/2009/12/ronin-have-names.html': '8869285368085788049',
     '/2010/01/fury-of-water.html': '6802949479675693413',
+    '/2010/04/promise-sleep-made-me.html': '810629034388943473',
     '/2010/05/avoidance-of-pain.html': '4990297562535938479',
     '/2010/05/books-never-written.html': '393401550689118512',
     '/2010/05/day-time-waited-for-me.html': '1306309165597685462',
