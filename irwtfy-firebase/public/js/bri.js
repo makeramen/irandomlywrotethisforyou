@@ -158,45 +158,39 @@ const pathIdMap = {
     '/2017/06/the-words-made-of-still-water.html': '1838130485550506283',
 }
 
-function getId(apiKey, path) {
-    return $.ajax({
+async function getId(apiKey, path) {
+    const entry = await $.ajax({
         url: 'https://www.googleapis.com/blogger/v3/blogs/6752139154038265086/posts/bypath',
-            crossDomain: true,
-            dataType: 'jsonp',
-            data : {
-                'path': path,
-                'fields': 'id,url,title,content,published',
-                'key': apiKey,
-            },
-        })
-        .then(function(entry) {
-            console.log(entry.id)
-        })
+        crossDomain: true,
+        dataType: 'jsonp',
+        data: {
+            'path': path,
+            'fields': 'id,url,title,content,published',
+            'key': apiKey,
+        },
+    })
+    console.log(entry.id)
 }
 
-function getRandomEntryId() {
+async function getRandomEntryId() {
     const ids = Object.values(pathIdMap)
     return Promise.resolve(ids[Math.floor(Math.random() * ids.length)])
 }
 
-function showRandomEntry() {
-    return getRandomEntryId()
-        .then(function(entryId) {
-            return $.ajax({
-                url: 'https://www.blogger.com/feeds/6752139154038265086/posts/default/' + entryId,
-                crossDomain: true,
-                dataType: 'jsonp',
-                data : {
-                    'alt': 'json'
-                },
-            })
-        })
-        .then(function(result) {
-            const entry = result.entry
-            $app.published = new Date(entry.published.$t).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
-            $app.title = entry.title.$t
-            $app.url = entry.link.find(function(l) { return l.rel == 'alternate' }).href
-            $app.content = sanitizeContent(entry.content.$t)
-            Vue.nextTick(cleanUpAfterLoad)
-        })
+async function showRandomEntry() {
+    const entryId = await getRandomEntryId()
+    const result = await $.ajax({
+        url: 'https://www.blogger.com/feeds/6752139154038265086/posts/default/' + entryId,
+        crossDomain: true,
+        dataType: 'jsonp',
+        data: {
+            'alt': 'json'
+        },
+    })
+    const entry = result.entry
+    $app.published = new Date(entry.published.$t).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+    $app.title = entry.title.$t
+    $app.url = entry.link.find(function (l) { return l.rel == 'alternate' }).href
+    $app.content = sanitizeContent(entry.content.$t)
+    Vue.nextTick(cleanUpAfterLoad)
 }

@@ -62,8 +62,9 @@ var $app = new Vue({
 var $ptr = PullToRefresh.init({
     mainElement: '#wrapper',
     passive: true,
-    onRefresh: function(done) { 
-        showRandomEntry().then(done)
+    onRefresh: async function(done) { 
+        await showRandomEntry()
+        done()
     }
 })
 
