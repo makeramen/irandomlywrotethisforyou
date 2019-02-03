@@ -12,7 +12,7 @@ const agent = new Agent({ keepAlive: true })
 export const randomEntry = https.onRequest(async (request, response) => {
   const doc = await countRef.get()
   const data = doc.data()
-  let count
+  let count: number
   if (data && data.count && parseInt(data.count) % 1 === 0) {
     count = parseInt(data.count)
   } else {
