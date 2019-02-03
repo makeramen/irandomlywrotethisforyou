@@ -43,5 +43,5 @@ export const randomEntry = https.onRequest(async (request, response) => {
     await countRef.set({ count: c })
   }
 
-  response.redirect(307, url)
+  response.redirect(url)
 })
