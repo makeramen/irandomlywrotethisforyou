@@ -1,8 +1,8 @@
 {
+  "name": "functions",
   "engines": {
     "node": "8"
   },
-  "name": "functions",
   "scripts": {
     "lint": "tslint --project tsconfig.json",
     "build": "./node_modules/.bin/tslint --project tsconfig.json && ./node_modules/.bin/tsc",
