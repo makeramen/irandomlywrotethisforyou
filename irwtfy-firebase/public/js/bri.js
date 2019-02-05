@@ -159,17 +159,14 @@ const pathIdMap = {
 }
 
 async function getId(apiKey, path) {
-    const entry = await $.ajax({
-        url: 'https://www.googleapis.com/blogger/v3/blogs/6752139154038265086/posts/bypath',
-        crossDomain: true,
-        dataType: 'jsonp',
-        data: {
+    const entry = await axios.get('https://www.googleapis.com/blogger/v3/blogs/6752139154038265086/posts/bypath', {
+        params: {
             'path': path,
             'fields': 'id,url,title,content,published',
             'key': apiKey,
-        },
+        }
     })
-    console.log(entry.id)
+    console.log(entry.data.id)
 }
 
 async function getRandomEntryId() {
@@ -179,15 +176,12 @@ async function getRandomEntryId() {
 
 async function showRandomEntry() {
     const entryId = await getRandomEntryId()
-    const result = await $.ajax({
-        url: 'https://www.blogger.com/feeds/6752139154038265086/posts/default/' + entryId,
-        crossDomain: true,
-        dataType: 'jsonp',
-        data: {
+    const result = await axios.get('https://www.blogger.com/feeds/6752139154038265086/posts/default/' + entryId, {
+        params: {
             'alt': 'json'
-        },
+        }
     })
-    const entry = result.entry
+    const entry = result.data.entry
     $app.published = new Date(entry.published.$t).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
     $app.title = entry.title.$t
     $app.url = entry.link.find(function (l) { return l.rel == 'alternate' }).href

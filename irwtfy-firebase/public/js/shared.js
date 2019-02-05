@@ -7,47 +7,43 @@ function sanitizeContent(content) {
 
 function cleanUpAfterLoad() {
     // Set all anchors that wrap images to display: block
-    $("#content a:has(img)").css("display","block");
+    document.querySelectorAll("#content a:has(img)").style.display = 'block';
 
     // Remove any line breaks immediately before the text
-    var node = $("#content").contents().toArray()
-        .find(function(n) { return n.nodeType == 3 && $.trim(n.textContent) })
+    var node = document.querySelectorAll("#content").childNodes
+        .find(function(n) { return n.nodeType == 3 && n.textContent.trim() })
     while (node && node.previousSibling
         && (node.previousSibling.nodeName == "BR" || node.previousSibling.nodeType == 8)) {
         node.previousSibling.remove();
     }
 
     // Find all YouTube and Vimeo videos
-    $allVideos = $("iframe[src*='www.youtube.com'], iframe[src*='player.vimeo.com']");
+    $allVideos = document.querySelectorAll("iframe[src*='www.youtube.com'], iframe[src*='player.vimeo.com']");
 
     if ($allVideos.length > 0) {
         // Figure out and save aspect ratio for each video
         $allVideos.each(function() {
-            $(this)
-            .data('aspectRatio', this.height / this.width)
+            this.dataset.aspectRatio = this.height / this.width;
             // and remove the hard coded width/height
-            .removeAttr('height')
-            .removeAttr('width');
+            this.removeAttribute('height');
+            this.removeAttribute('width');
         });
 
         // Kick off one resize to fix all videos on page load
-        $(window).resize()
+        window.dispatchEvent(new Event('resize'));
     }
 }
 
 // When the window is resized
-$(window).resize(function() {
+window.onresize = function() {
     if (typeof $allVideos === 'undefined') { return }
     // Resize all videos according to their own aspect ratio
-    $allVideos.each(function() {
-    var $el = $(this);
-    // Get parent width of this video
-    var newWidth = $el.parent().width();
-    $el
-        .width(newWidth)
-        .height(newWidth * $el.data('aspectRatio'));
+    $allVideos.forEach(element => {
+        let newWidth = element.parentElement.width;
+        element.width = newWidth;
+        element.height = newWidth * element.dataset.aspectRatio;
     });
-});
+};
 
 var $app = new Vue({
     el: "#wrapper",
@@ -68,4 +64,5 @@ var $ptr = PullToRefresh.init({
     }
 })
 
-$(function () { showRandomEntry() } )
+showRandomEntry()
+// (function () { showRandomEntry() } )

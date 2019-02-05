@@ -3,17 +3,9 @@ async function getCount() {
     if (count) {
         return parseInt(count)
     }
-    const result = await $.ajax({
-        url: 'https://www.blogger.com/feeds/6752139154038265086/posts/default',
-        crossDomain: true,
-        dataType: 'jsonp',
-        data: {
-            'alt': 'json',
-            'start-index': 1,
-            'max-results': 1,
-        },
-    })
-    count = result.feed.openSearch$totalResults.$t
+    const result = await fetchJsonp('https://www.blogger.com/feeds/6752139154038265086/posts/default?alt=json&start-index=1&max-results=1')
+    const resultJson = await result.json()
+    count = resultJson.feed.openSearch$totalResults.$t
     setCountCookie(count)
     return parseInt(count)
 }
@@ -24,19 +16,11 @@ function setCountCookie(count) {
 
 async function showRandomEntry() {
     let count = await getCount()
-    const result = await $.ajax({
-        url: 'https://www.blogger.com/feeds/6752139154038265086/posts/default',
-        crossDomain: true,
-        dataType: 'jsonp',
-        data: {
-            'alt': 'json',
-            'start-index': Math.floor(Math.random() * count) + 1,
-            'max-results': 1,
-        },
-    })
-    newCount = result.feed.openSearch$totalResults.$t
+    const result = await fetchJsonp('https://www.blogger.com/feeds/6752139154038265086/posts/default?alt=json&max-results=1&' + Math.floor(Math.random() * count) + 1);
+    const resultJson = await result.json()
+    newCount = resultJson.feed.openSearch$totalResults.$t
     setCountCookie(newCount)
-    const entry = result.feed.entry[0]
+    const entry = resultJson.feed.entry[0]
     $app.published = new Date(entry.published.$t).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
     $app.title = entry.title.$t
     $app.url = entry.link.find(function (l) { return l.rel == 'alternate' }).href
