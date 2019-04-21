@@ -16,7 +16,7 @@ function setCountCookie(count) {
 
 async function showRandomEntry() {
     let count = await getCount()
-    const result = await fetchJsonp('https://www.blogger.com/feeds/6752139154038265086/posts/default?alt=json&max-results=1&' + Math.floor(Math.random() * count) + 1);
+    const result = await fetchJsonp('https://www.blogger.com/feeds/6752139154038265086/posts/default?alt=json&max-results=1&start-index=' + (Math.floor(Math.random() * count) + 1));
     const resultJson = await result.json()
     newCount = resultJson.feed.openSearch$totalResults.$t
     setCountCookie(newCount)
