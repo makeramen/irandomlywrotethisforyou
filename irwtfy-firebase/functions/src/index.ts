@@ -13,15 +13,11 @@ export const randomEntry = https.onRequest(async (request, response) => {
   const doc = await countRef.get()
   const data = doc.data()
   let count: number
-  if (data && data.count && parseInt(data.count) % 1 === 0) {
+  if (data && data.count && parseInt(data.count) > 0) {
     count = parseInt(data.count)
   } else {
     const countResponse = await axios.get('https://www.blogger.com/feeds/6752139154038265086/posts/default', {
-      params: {
-        'alt': 'json',
-        'start-index': 1,
-        'max-results': 1,
-      },
+      params: { 'alt': 'json', 'start-index': 1, 'max-results': 1, },
       httpsAgent: agent,
     })
     count = countResponse.data.feed.openSearch$totalResults.$t
@@ -29,11 +25,7 @@ export const randomEntry = https.onRequest(async (request, response) => {
   }
 
   const resp = await axios.get('https://www.blogger.com/feeds/6752139154038265086/posts/default', {
-    params: {
-      'alt': 'json',
-      'start-index': Math.floor(Math.random() * count) + 1,
-      'max-results': 1,
-    },
+    params: { 'alt': 'json', 'start-index': Math.floor(Math.random() * count) + 1, 'max-results': 1, },
     httpsAgent: agent,
   })
   const url = resp.data.feed.entry[0].link.find(l => l.rel === 'alternate').href
