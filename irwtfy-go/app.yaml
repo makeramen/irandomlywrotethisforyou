@@ -1,5 +1,4 @@
-runtime: go
-api_version: go1
+runtime: go112
 
 handlers:
 - url: /robots.txt
@@ -31,5 +30,5 @@ handlers:
   secure: always
 
 - url: /.*
-  script: _go_app
+  script: auto
   secure: always
