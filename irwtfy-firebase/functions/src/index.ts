@@ -1,9 +1,9 @@
 import { Agent } from 'https'
 import axios from 'axios'
 import { initializeApp, firestore } from 'firebase-admin'
-import { config, https } from 'firebase-functions'
+import { https } from 'firebase-functions'
 
-initializeApp(config().firebase)
+initializeApp()
 
 const db = firestore()
 const countRef = db.collection('irwtfy').doc('count')
